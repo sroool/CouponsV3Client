@@ -1,0 +1,30 @@
+<div class="container">
+    <div class="form-card mat-elevation-z8">
+        <mat-toolbar color="accent">
+            <h2>Login</h2>
+        </mat-toolbar>
+        <form [formGroup]="loginForm">
+            <mat-form-field>
+                <mat-label>Email</mat-label>
+                <input matInput type="email" placeholder="e.g. John@gmail.com" formControlName="email" />
+                <mat-error *ngIf="email.errors?.required">Email is required</mat-error>
+                <mat-error *ngIf="email.errors?.email">Invalid email</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Password</mat-label>
+                <input matInput [type]="type" placeholder="your password" formControlName="password" />
+                <button mat-icon-button matSuffix (click)="showPassword()"><mat-icon>{{visibility}}</mat-icon></button>
+                <mat-error>Password is required</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Client Type</mat-label>
+                <mat-select formControlName="clientType">
+                    <mat-option *ngFor="let t of clientTypes" [value]="t">{{t}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="clientType.errors?.required">Client Type is required</mat-error>
+            </mat-form-field>
+            <button mat-raised-button [disabled]="!loginForm.valid" (click)="login()">Login</button>
+            <button mat-raised-button>forgot my password</button>
+        </form>
+    </div>
+    </div>

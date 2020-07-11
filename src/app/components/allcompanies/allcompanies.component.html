@@ -1,0 +1,64 @@
+<div class="container">
+    <div class="header">
+        <h2>List of companies :</h2>
+        <h3 *ngIf="dataSource?.data">{{dataSource.data.length}} companies</h3>
+    </div>
+    <section class="section">
+        <button mat-raised-button (click)="addCompany()">Add Company</button>
+        <mat-form-field>
+            <input matInput placeholder="search" class="search" [(ngModel)]="search" (keyup)="filterSearch()" />
+            <button mat-icon-button matSuffix *ngIf="search" (click)="clearSearch()">
+                <mat-icon>
+                    close
+                </mat-icon>
+            </button>
+        </mat-form-field>
+        
+        <mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+            <ng-container matColumnDef="id">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element._id}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Company Name</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element._name}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="email">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element._email}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="password">
+                <mat-header-cell *matHeaderCellDef>Password</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element._password}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="coupons">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Number of Coupons</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element._coupons?.length || 0}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="actions">
+                <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <button mat-icon-button (click)="showCompany(element)">
+                        <mat-icon>launch</mat-icon>
+                    </button>
+                </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="loading">
+                <mat-footer-cell *matFooterCellDef colspan="5">
+                    <mat-spinner color="accent" [diameter]="30"></mat-spinner>
+                </mat-footer-cell>
+            </ng-container>
+            <ng-container matColumnDef="noData">
+                <mat-footer-cell *matFooterCellDef colspan="5">
+                    No Companies to show!
+                </mat-footer-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':dataSource!=null}"></mat-footer-row>
+            <mat-footer-row *matFooterRowDef="['noData']"
+                [ngClass]="{'hide': !(dataSource !=null && dataSource.data.length == 0)}"></mat-footer-row>
+        </mat-table>
+        <mat-paginator [pageSizeOptions]="[5,10,20,100]" [pageSize]="10"></mat-paginator>
+    </section>
+</div>

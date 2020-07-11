@@ -1,0 +1,47 @@
+<div class="container">
+    <div >
+        <mat-toolbar color="accent">
+            <h2>{{title}}</h2>
+            <span class="fill-toolbar"></span>
+            <button mat-icon-button (click)="close()"><mat-icon>cancel</mat-icon></button>
+        </mat-toolbar>
+        <form [formGroup]="newCustomer">
+            <mat-form-field *ngIf="customer">
+                <mat-label>ID</mat-label>
+                <input matInput formControlName="id">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>First Name</mat-label>
+                <input matInput placeholder="First Name" formControlName="fname" />
+                <mat-error *ngIf="fname.errors?.required">First Name is required</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Last Name</mat-label>
+                <input matInput placeholder="Last Name" formControlName="lname" />
+                <mat-error *ngIf="lname.errors?.required">Last Name is required</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Email</mat-label>
+                <input matInput type="email" placeholder="e.g. Boba@Bola.com" formControlName="email" />
+                <mat-error *ngIf="email.errors?.required">Email is required</mat-error>
+                <mat-error *ngIf="email.errors?.email">Invalid email</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Password</mat-label>
+                <input matInput [type]="type" placeholder="your password" formControlName="password" />
+                <button mat-icon-button matSuffix (click)="showPassword()"><mat-icon>{{visibility}}</mat-icon></button>
+                <mat-error>Password is required</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Confirm Password</mat-label>
+                <input matInput [type]="type" placeholder="confirm your password" formControlName="confirmp" />
+                <mat-error>Password is required</mat-error>
+                <mat-error *ngIf="confirmp.errors?.passwordsMatchError">Passwords need to match</mat-error>
+
+            </mat-form-field>
+            
+            <button mat-raised-button [disabled]="!newCustomer.valid" (click)="saveCustomer()">{{title}}</button>
+            <button mat-raised-button (click)="deleteCustomer()" *ngIf="customer">Delete Customer</button>
+        </form>
+    </div>
+    </div>

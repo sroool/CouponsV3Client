@@ -1,0 +1,45 @@
+<div class="container">
+    <mat-toolbar color="primary">
+        <span class="logo" (click)="router.navigate(['/home'])">
+            <img src='assets/logo2.png' alt='alt' />
+        </span>
+        <span>
+        {{loginService.authenticated}}
+    </span>&nbsp;<span> 
+        {{loginService.clientType?.toString() || 'no client type'}}
+    </span>
+        <span class="fill-toolbar"></span>
+        
+        <div class="actions">
+            <mat-spinner color="accent" *ngIf="!loginService.authenticated; else logout" [diameter]="30"></mat-spinner>
+            <ng-template #logout>
+                
+                <button mat-raised-button *ngIf="loginService.authenticated == 1" routerLink="login">Login</button>
+                <button mat-icon-button *ngIf="loginService.authenticated == 2" [matMenuTriggerFor]="myMenu" ><mat-icon>account_circle</mat-icon></button>
+                <mat-menu #myMenu="matMenu">
+                    <button mat-menu-item >My Profile</button>
+                    
+                    <ng-container *ngIf="loginService.clientType?.toString() == 'Administrator'">
+                        <button mat-menu-item (click)="createCompany()">New Company</button>
+                        <button mat-menu-item routerLink="all-companies">All Companies</button>
+                        <button mat-menu-item (click)="createCustomer()">New Customer</button>
+                        <button mat-menu-item routerLink="all-customers">All Customers</button>
+                    </ng-container>
+                    
+                    <ng-container *ngIf="loginService.clientType?.toString() == 'Company'">
+                        <button mat-menu-item >Add New Coupon</button>
+                        <button mat-menu-item >All Coupons</button>
+                    </ng-container>
+                    <ng-container *ngIf="loginService.clientType?.toString() == 'Customer'">
+                        <button mat-menu-item >My Coupons</button>
+                    </ng-container>
+                    <button mat-menu-item (click)="loginService.logout()">Logout</button>
+                    
+
+                </mat-menu>
+            </ng-template>
+
+        </div>
+    </mat-toolbar>
+
+</div>

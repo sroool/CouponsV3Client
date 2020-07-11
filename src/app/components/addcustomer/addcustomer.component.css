@@ -1,0 +1,17 @@
+
+form{
+    margin: 16px;
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 6px;
+    margin-bottom: 6px;
+}
+mat-form-field{
+    display: block;
+}
+button{
+    margin-right: 6px;
+}
+.fill-toolbar{
+    flex : 1 1 auto;
+}

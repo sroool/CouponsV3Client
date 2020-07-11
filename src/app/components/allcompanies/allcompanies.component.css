@@ -1,0 +1,18 @@
+
+.hide{
+    display: none;
+}
+.header{
+    text-align: center;
+}
+mat-footer-row mat-footer-cell{
+    justify-content: center;
+}
+section{
+    max-width: 80%;
+    margin: 0 auto;
+}
+mat-form-field{
+    width: 350px;
+    margin-left: 16px;
+}

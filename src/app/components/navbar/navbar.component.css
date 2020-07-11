@@ -1,0 +1,13 @@
+mat-toolbar{
+    background-color: aquamarine;
+}
+
+
+.fill-toolbar{
+    flex: 1 1 auto;
+}
+
+
+.logo:hover{
+    cursor: pointer;
+}
