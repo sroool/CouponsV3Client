@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Category } from 'src/app/models/category.enum';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-home',
@@ -8,7 +8,7 @@ import { Category } from 'src/app/models/category.enum';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(public loginService : LoginService) { }
 
   ngOnInit(): void {
     

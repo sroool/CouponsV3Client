@@ -1,76 +1,90 @@
 import { Category } from './category.enum';
 
 export class Coupon {
-    constructor( private _id : number,
-                 private _companyId : number,
-                 private _category : Category,
-                 private _title : string,
-                 private _description : string,
-                 private _startDate : Date,
-                 private _endDate : Date,
-                 private _amount :  number,
-                 private _price : number,
-                 private _image : string
+    constructor( private id : number,
+                 private companyId : number,
+                 private category : Category,
+                 private title : string,
+                 private description : string,
+                 private startDate : Date,
+                 private endDate : Date,
+                 private amount :  number,
+                 private price : number,
+                 private image : string
         ){}
-    get id() : number{
-        return this._id;
+    get _id() : number{
+        return this.id;
     }
-    set id(id : number) {
-        this._id = id;
+    set _id(id : number) {
+        this.id = id;
+    }
+    get _category(){
+        return this.category;
+    }
+    set _category(category : Category){
+        this.category = category;
+    }
+    get _companyId() : number{
+        return this.companyId;
+    }
+    set _companyId(companyId : number) {
+        this.companyId = companyId;
     }
 
-    get companyId() : number{
-        return this._companyId;
+    get _title() : string{
+        return this.title;
     }
-    set companyId(companyId : number) {
-        this._companyId = companyId;
+    set _title(title : string){
+        this.title = title;
     }
-
-    get title() : string{
-        return this._title;
+    get _description() : string {
+        return this.description;
     }
-    set title(title : string){
-        this._title = title;
+    set _description(description : string){
+        this.description = description;
     }
-    get description() : string {
-        return this._description;
+    get _startDate() : Date{
+        return this.startDate;
     }
-    set description(description : string){
-        this._description = description;
+    set _startDate(startDate : Date){
+        this.startDate = startDate;
     }
-    get startDate() : Date{
-        return this._startDate;
+    get _endDate() : Date{
+        return this.endDate;
     }
-    set startDate(startDate : Date){
-        this._startDate = startDate;
-    }
-    get endDate() : Date{
-        return this._endDate;
-    }
-    set endDate(endDate : Date){
+    set _endDate(endDate : Date){
         this.endDate = endDate;
     }
-    get amount() : number{
-        return this._amount;
+    get _amount() : number{
+        return this.amount;
     }
-    set amount(amount : number) {
-        this._amount = amount;
+    set _amount(amount : number) {
+        this.amount = amount;
     }
-    get price() : number{
-        return this._price;
+    get _price() : number{
+        return this.price;
     }
-    set price(price : number){
-        this._price = price;
+    set _price(price : number){
+        this.price = price;
     }
-    get image() : string{
-        return this._image;
+    get _image() : string{
+        return this.image;
     }
-    set image(image :string){
-        this._image = image;
+    set _image(image :string){
+        this.image = image;
     }
     public static getCoupon(obj : Coupon){
-        let coupon : Coupon = new Coupon(0,0,null,"","",null,null,0,0,"");
-        return Object.assign(coupon, obj);
+        let coupon : Coupon = new Coupon(obj.id,obj.companyId,obj.category,obj.title,
+                                         obj.description,obj.startDate,obj.endDate,obj.amount,
+                                         obj.price,obj.image);
+        return coupon;
+    }
+    public static getCoupons(obj : Coupon[]){
+        let coupons : Coupon[] = new Array<Coupon>();
+        for(let c of obj){
+            coupons.push(this.getCoupon(c));
+        }
+        return coupons;
     }
 
 }

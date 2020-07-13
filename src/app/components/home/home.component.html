@@ -1,3 +1,12 @@
 <div class="container">
     <h1>Home</h1>
+    <ng-container *ngIf="loginService.clientType?.toString() == 'Administrator'">
+        <app-adminhome></app-adminhome>
+    </ng-container>
+    <ng-container *ngIf="loginService.clientType?.toString() == 'Company'">
+        <app-companyhome></app-companyhome>
+    </ng-container>
+    <ng-container *ngIf="loginService.clientType?.toString() == 'Customer'">
+        <app-customerhome></app-customerhome>
+    </ng-container>
 </div>

@@ -65,7 +65,6 @@ export class LoginService {
         }else{
           this.clientType = "Administrator";
         }
-        console.log(this.clientType.toString())
         this.authenticated = 2;
         
        

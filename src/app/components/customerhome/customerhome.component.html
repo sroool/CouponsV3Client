@@ -1,0 +1,35 @@
+<div class="container">
+    <div class="limited-time mat-elevation-z8 offers" >
+        <h2>Limited Time Coupons - DONT MISS OUT</h2>
+        <div class="limited-time-coupons">
+
+            <app-minicoupon *ngFor="let coupon of limitedTimeCoupons" [coupon]="coupon"></app-minicoupon>
+        </div>
+    </div> 
+    
+    <div class="mat-elevation-z23 top-picks offers">
+        <h2>Customers Top Picks</h2>
+        <div class="top-picks-coupons">
+            <app-minicoupon *ngFor="let suggestion of topPicksCoupons" [coupon]="suggestion.coupon" [boughtBy]="suggestion.count"></app-minicoupon>
+        </div>
+    </div>
+    <br>
+    Food
+    <br>
+    Electricity
+    <br>
+    Vacation
+    <br>
+    Fashion
+    <br>
+    Pets
+    <br> 
+    Tourism
+    <br>
+    Furniture
+    <br>
+    Spa
+    <br>
+    recently viewed
+
+</div>

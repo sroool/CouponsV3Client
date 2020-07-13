@@ -25,11 +25,24 @@ import { MatMenuModule } from "@angular/material/menu";
 import { MatTableModule } from "@angular/material/table";
 import { MatSortModule } from "@angular/material/sort";
 import { MatPaginatorModule } from "@angular/material/paginator"
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+
 
 import { AllcompaniesComponent } from './components/allcompanies/allcompanies.component';
 import { AllcustomersComponent } from './components/allcustomers/allcustomers.component';
 import { AddcompanyComponent } from './components/addcompany/addcompany.component';
 import { AddcustomerComponent } from './components/addcustomer/addcustomer.component';
+import { MyprofileComponent } from './components/myprofile/myprofile.component';
+import { CustomerprofileComponent } from './components/customerprofile/customerprofile.component';
+import { CompanyprofileComponent } from './components/companyprofile/companyprofile.component';
+import { AddcouponComponent } from './components/addcoupon/addcoupon.component';
+import { CustomerhomeComponent } from './components/customerhome/customerhome.component';
+import { CompanyhomeComponent } from './components/companyhome/companyhome.component';
+import { AdminhomeComponent } from './components/adminhome/adminhome.component';
+import { CouponComponent } from './components/coupon/coupon.component';
+import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.component';
+import { MinicouponComponent } from './components/minicoupon/minicoupon.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +54,17 @@ import { AddcustomerComponent } from './components/addcustomer/addcustomer.compo
     AllcompaniesComponent,
     AllcustomersComponent,
     AddcompanyComponent,
-    AddcustomerComponent
+    AddcustomerComponent,
+    MyprofileComponent,
+    CustomerprofileComponent,
+    CompanyprofileComponent,
+    AddcouponComponent,
+    CustomerhomeComponent,
+    CompanyhomeComponent,
+    AdminhomeComponent,
+    CouponComponent,
+    PagenotfoundComponent,
+    MinicouponComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +85,9 @@ import { AddcustomerComponent } from './components/addcustomer/addcustomer.compo
     MatMenuModule,
     MatTableModule,
     MatSortModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatTabsModule,
+    MatDatepickerModule
 
   ],
   providers: [],

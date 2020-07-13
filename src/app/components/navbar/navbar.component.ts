@@ -5,6 +5,7 @@ import { ClientType } from 'src/app/services/client-type.enum';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AddcompanyComponent } from '../addcompany/addcompany.component';
 import { AddcustomerComponent } from '../addcustomer/addcustomer.component';
+import { AddcouponComponent } from '../addcoupon/addcoupon.component';
 
 @Component({
   selector: 'app-navbar',
@@ -32,6 +33,13 @@ export class NavbarComponent implements OnInit {
     config.disableClose = true;
     config.width = "40%";
     this.dialog.open(AddcustomerComponent, config);
+  }
+  createCoupon(){
+    let config : MatDialogConfig = new MatDialogConfig();
+    config.autoFocus = true;
+    config.disableClose = true;
+    config.width = "60%";
+    this.dialog.open(AddcouponComponent, config);
   }
 
 }

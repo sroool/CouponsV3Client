@@ -1,0 +1,68 @@
+<div class="container">
+    <div>
+        <mat-toolbar color="accent">
+            <h2>{{header}}</h2>
+            <span class="fill-toolbar"></span>
+            <button mat-icon-button (click)="close()">
+                <mat-icon>cancel</mat-icon>
+            </button>
+        </mat-toolbar>
+        <form [formGroup]="newCoupon">
+
+            <mat-form-field>
+                <mat-label>Title</mat-label>
+                <input matInput placeholder="Title" formControlName="title" />
+                <mat-error>Title is required</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Category</mat-label>
+                <mat-select formControlName="category">
+                    <mat-option *ngFor="let category of possibleCategories" [value]="category">
+                        {{category}}</mat-option>
+                </mat-select>
+                <mat-error>Category is required</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Description</mat-label>
+                <textarea matInput formControlName="description"></textarea>
+
+                <mat-error>Description is required</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Start Date</mat-label>
+                <input matInput type="date" (change)="validateEndDate(endDate)" formControlName="startDate" />
+
+                <mat-error *ngIf="startDate.errors?.required">Start Date is required</mat-error>
+                <mat-error *ngIf="startDate.errors?.invalidStartDate">Start Date must be in the future</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>End Date</mat-label>
+                <input matInput type="date" formControlName="endDate" />
+                <mat-error *ngIf="endDate.errors?.required">End Date is required</mat-error>
+                <mat-error *ngIf="endDate.errors?.invalidEndDate">End Date must be after Start Date</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Amount</mat-label>
+                <input matInput type="number" formControlName="amount" />
+                <mat-error>Amount is required</mat-error>
+                <mat-error *ngIf="startDate.errors?.min">Amount must be positive</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Price</mat-label>
+                <input matInput type="number" formControlName="price" />
+                <mat-error>Price is required</mat-error>
+                <mat-error *ngIf="startDate.errors?.min">Price must be positive</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Image</mat-label>
+                <input matInput type="text" formControlName="image" />
+                <mat-error>Image is required</mat-error>
+            </mat-form-field>
+            <div class="actions">
+                <button mat-raised-button [disabled]="!newCoupon.valid" (click)="saveCoupon()">{{header}}</button>
+                <button mat-raised-button [disabled]="disableDelete" (click)="deleteCoupon()" *ngIf="coupon">Delete Coupon</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+.container{
+    border: 1px solid purple;
+    margin: 6px;
+    padding: 6px;
+}
+.container:hover{
+    box-shadow: 0px 0px 18px 0px rgba(0,0,0,0.75);
+}
+img{
+    width: 160px;
+    height: 120px;
+    margin: 0 auto;
+    display: block;
+}
+
+.price, .bought{
+    float: right;
+    padding-right: 6px;
+}

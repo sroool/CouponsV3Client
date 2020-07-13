@@ -1,0 +1,11 @@
+.offers{
+    margin-bottom: 16px;
+}
+.limited-time-coupons{
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+}
+.top-picks-coupons{
+    display: grid;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+}

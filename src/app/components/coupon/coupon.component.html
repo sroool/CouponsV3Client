@@ -1,0 +1,28 @@
+<div class="container mat-elevation-z8">
+    {{couponId}}
+    <img src="assets/product-placeholder.png" [alt]="coupon?._title" />
+    <div class="info">
+        <div class="info-content">
+
+            <h1>{{coupon?._title}}</h1>
+            <h3>{{coupon?._description}}</h3>
+            <p>This coupon expires on {{coupon?._endDate}}, hurry!</p>
+            <p>only {{coupon?._price | currency:'ILS'}}</p>
+            <button mat-raised-button color="accent">Buy NOW!</button>
+            <p>{{purchaseAmount}} other people bought this coupon </p>
+            <p class="count-down" *ngIf="limitedTime()">
+                ONLY {{ countDown }} HOURS LEFT! HURRY!
+            </p>
+
+        </div>
+    </div>
+    <hr>
+    <div class="additional" *ngIf="recommended">
+        <p>People who bought {{coupon?._title}} Also enjoyed these:</p>
+        <div class="additional-coupons">
+
+            <app-minicoupon *ngFor="let suggestion of recommended" [boughtBy]="suggestion.count" [coupon]="suggestion.coupon"></app-minicoupon>
+        </div>
+    </div>
+    
+</div>

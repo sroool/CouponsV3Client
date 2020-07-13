@@ -1,0 +1,14 @@
+<div class="container">
+    <img src="assets/product-placeholder.png" alt="" />
+    <div class="coupon-info">
+        {{coupon._title}} 
+        <span class="price">
+            {{coupon._price | currency:'ILS' }}
+        </span><br>
+        <a routerLink="">{{coupon._category}}</a>
+        <span class="bought">
+            {{boughtBy}} bought this
+        </span>
+    </div>
+
+</div>

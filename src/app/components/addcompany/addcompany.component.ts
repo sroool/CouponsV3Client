@@ -73,6 +73,7 @@ export class AddcompanyComponent implements OnInit {
           this.close();
         })
       }, error => {
+        console.log(error)
         let errorMessage : string = error.error;
         if(error.status == 0){
           errorMessage = "oops, try again later", "dismiss";

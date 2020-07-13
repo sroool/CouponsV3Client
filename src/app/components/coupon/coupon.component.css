@@ -1,0 +1,30 @@
+.container{
+    width: 90%;
+    
+    margin: 0 auto;
+    margin-top: 10px;
+    padding: 10px;
+    position: relative;
+}
+.info{
+    display: inline-block;
+    position: absolute;
+    top: 50px;
+    left: 450px;   
+}
+.info-content button{
+    width: 180px;
+    height: 70px;
+    font-size: 25pt;
+}
+.info-content h1{
+    font-size: 30pt;
+}
+.count-down{
+    font-size: 18pt;
+    color: red;
+}
+.additional-coupons{
+    display: grid;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+}

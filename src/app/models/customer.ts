@@ -45,10 +45,14 @@ export class Customer {
             coupons = this.coupons;
         return coupons;
     }
+    set _coupons(coupons : Coupon[]){
+        this.coupons = coupons;
+    }
 
     public static getCustomer(obj : Customer){
-        let customer : Customer = new Customer(0,"","","","",[]);
-        return Object.assign(customer, obj);
+        let customer : Customer = new Customer(obj.id,obj.firstName,obj.lastName,obj.email,obj.password,[]);
+        customer._coupons = Coupon.getCoupons(obj.coupons);
+        return customer;
     }
     public static getCustomers(obj : Customer[]){
         let customers : Customer[] = new Array<Customer>();

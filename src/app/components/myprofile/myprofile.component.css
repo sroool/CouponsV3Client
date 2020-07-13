@@ -1,0 +1,16 @@
+.container{
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+.info{
+    width: 80%;
+    margin: 0 auto;
+}
+mat-tab-group{
+    min-height: 400px;
+}
+.info-line{
+    margin-top: 20px;
+    margin-left: 20px;
+}
