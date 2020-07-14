@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Coupon } from 'src/app/models/coupon';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-customerprofile',
@@ -20,7 +21,7 @@ export class CustomerprofileComponent implements OnInit {
   displayedColumns : string[] = ["image","title","endDate","price"]
   @ViewChild(MatPaginator) paginator : MatPaginator;
   @ViewChild(MatSort) sort : MatSort;
-  constructor(private customerService : CustomerService) { }
+  constructor(private customerService : CustomerService, private snackBar : MatSnackBar) { }
 
   ngOnInit(): void {
     this.customerService.getCustomerDetails().subscribe(
@@ -44,7 +45,13 @@ export class CustomerprofileComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
       },
       error =>{
-        console.log(error);
+        if(error.status != 401){
+          let errorMessage = error.error;
+          if(error.status == 0 || error.status == 500){
+            errorMessage = "Oops, something went wrong";
+          }
+          this.snackBar.open(errorMessage,null,{duration: 2000});
+        }
       }
     )
   }

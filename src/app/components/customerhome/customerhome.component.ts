@@ -5,6 +5,7 @@ import { Customer } from 'src/app/models/customer';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
+import { Category } from 'src/app/models/category.enum';
 
 @Component({
   selector: 'app-customerhome',
@@ -16,8 +17,8 @@ export class CustomerhomeComponent implements OnInit {
   autoComplete : FormControl = new FormControl();
   options : Coupon[];
   optionsObs : Observable<Coupon[]>;
-  searchOption;
-
+  searchOption = "All";
+  categories : string[] = Object.keys(Category).filter( category => isNaN(+category) );
   limitedTimeCoupons: Coupon[] = [];
   topPicksCoupons: Suggestion[] = [];
   topPicksQualifier = 2;
@@ -33,7 +34,9 @@ export class CustomerhomeComponent implements OnInit {
   constructor(private customerService: CustomerService) { }
   _filter(title : string ) : Coupon[]{
     const filterValue = title.toLowerCase();
-    return this.options.filter( option => option._title.toLowerCase().includes(filterValue));
+    return this.options.filter( option => option._title.toLowerCase().includes(filterValue) &&
+    (this.searchOption != "All" ? option._category.toString() == this.searchOption : true)
+    );
   }
   display(coupon :Coupon) : string{
     return coupon && coupon._title ? coupon._title : '';

@@ -29,6 +29,7 @@ export class LoginService {
         this.clientType = clientType.toString();
         sessionStorage.setItem("token",success);
         this.router.navigateByUrl("/home");
+        
       },
       error=>{
         let errorMessage = error.status == 0 ? "Oops, Please try again later" : error.error;

@@ -6,18 +6,30 @@
 .search{
     width: 75%;
     margin-right: 6px;
+    margin-left: 16px;
     position: absolute;
     z-index: 5;
+    top: 185px;
     background-color: white;
-    border-radius: 8px;
+}
+mat-toolbar {
+    height: 120px;
+}
+mat-toolbar a:not(:last-child){
+    margin-right: 70px;
+}
+.categories{
+    position: absolute;
+    top: 147px;
 }
 .search-by{
     position: absolute;
-    width: 15%;
+    width: 12%;
     right: 62px;
+    margin-right: 16px;
+    top: 185px;
     z-index: 5;
     background-color: white;
-    border-radius: 8px;
 }
 .hide{
     display:none;
@@ -37,8 +49,8 @@
 .search-coupons{
     grid-template-columns: 33% 33% 33%;
     position: absolute;
-    left: 63px;
-    top: 180px;
+    left: 79px;
+    top: 245px;
     width: 75%;
     z-index: 5;
     background-color: white;

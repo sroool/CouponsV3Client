@@ -1,6 +1,8 @@
 <div class="container">
     <div class="overlay" *ngIf="autoComplete.value" (click)="overlayOff()"></div>
     <div>
+        <mat-toolbar color="accent"><span class="categories">
+            <a mat-button [routerLink]="['/category/',category]" *ngFor="let category of categories">{{category}}</a></span></mat-toolbar>
         <div class="search-box">
             <mat-form-field class="search">
                 <mat-label>Search coupon</mat-label>
@@ -12,9 +14,8 @@
             <mat-form-field class="search-by">
                 <mat-label>Search by</mat-label>
                 <mat-select [(value)]="searchOption">
-                    <mat-option value="Regular Search">Regular Search</mat-option>
-                    <mat-option value="By Category">By Category</mat-option>
-                    <mat-option value="By Max Price">By Max Price</mat-option>
+                    <mat-option value="All">All</mat-option>
+                    <mat-option *ngFor="let category of categories" [value]="category">{{category}}</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>

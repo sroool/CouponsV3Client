@@ -45,6 +45,7 @@ import { CouponComponent } from './components/coupon/coupon.component';
 import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.component';
 import { MinicouponComponent } from './components/minicoupon/minicoupon.component';
 import { LoadingComponent } from './components/loading/loading.component';
+import { CouponbycategoryComponent } from './components/couponbycategory/couponbycategory.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { LoadingComponent } from './components/loading/loading.component';
     CouponComponent,
     PagenotfoundComponent,
     MinicouponComponent,
-    LoadingComponent
+    LoadingComponent,
+    CouponbycategoryComponent
   ],
   imports: [
     BrowserModule,

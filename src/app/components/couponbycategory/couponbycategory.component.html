@@ -1,0 +1,11 @@
+<div class="container">
+    <mat-toolbar color="accent">
+        <h1>
+        {{categoryName}}
+     </h1>
+    </mat-toolbar>
+    <div class="category-coupons">
+
+        <app-minicoupon *ngFor="let suggestion of coupons" [coupon]="suggestion.coupon" [boughtBy]="suggestion.count"></app-minicoupon>
+    </div>
+</div>

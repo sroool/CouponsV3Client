@@ -73,7 +73,9 @@ export class CouponComponent implements OnInit {
         )
       },
       error => {
-        console.log(error);
+        if(error.status == 400){
+          this.router.navigateByUrl("/not-found");
+        }
       }
     )
   }
