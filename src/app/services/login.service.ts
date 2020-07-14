@@ -44,6 +44,7 @@ export class LoginService {
         sessionStorage.setItem("token","null");
         this.authenticated = 1;
         this.clientType = null;
+        this.router.navigateByUrl("login");
       }, error =>{
         let errorMessage = error.status == 0 ? "Oops, try again later" : error.error;
         this.snackBar.open(errorMessage, "dismiss");

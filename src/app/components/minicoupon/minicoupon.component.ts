@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Coupon } from 'src/app/models/coupon';
 import { CustomerService } from 'src/app/services/customer.service';
 import { Customer } from 'src/app/models/customer';
+import { Router } from '@angular/router';
+import { CouponComponent } from '../coupon/coupon.component';
 
 @Component({
   selector: 'app-minicoupon',
@@ -14,7 +16,10 @@ export class MinicouponComponent implements OnInit {
   coupon : Coupon;
   @Input()
   boughtBy;
-  constructor(private customerService : CustomerService) { }
+  @Input()
+  search;
+  imgPlaceHolder="assets/product-placeholder.png";
+  constructor(private customerService : CustomerService, private router : Router) { }
 
   ngOnInit(): void {
     if(!this.boughtBy){
@@ -25,5 +30,6 @@ export class MinicouponComponent implements OnInit {
       )
     }
   }
+
 
 }

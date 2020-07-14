@@ -22,7 +22,7 @@ label{
 .hide{
     display: none;
 }
-mat-form-field{
+.search{
     width: 350px;
     margin-left: 16px;
 }

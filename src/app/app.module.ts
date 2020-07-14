@@ -27,6 +27,7 @@ import { MatSortModule } from "@angular/material/sort";
 import { MatPaginatorModule } from "@angular/material/paginator"
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatAutocompleteModule } from "@angular/material/autocomplete";
 
 
 import { AllcompaniesComponent } from './components/allcompanies/allcompanies.component';
@@ -43,6 +44,7 @@ import { AdminhomeComponent } from './components/adminhome/adminhome.component';
 import { CouponComponent } from './components/coupon/coupon.component';
 import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.component';
 import { MinicouponComponent } from './components/minicoupon/minicoupon.component';
+import { LoadingComponent } from './components/loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +66,8 @@ import { MinicouponComponent } from './components/minicoupon/minicoupon.componen
     AdminhomeComponent,
     CouponComponent,
     PagenotfoundComponent,
-    MinicouponComponent
+    MinicouponComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,
@@ -87,7 +90,8 @@ import { MinicouponComponent } from './components/minicoupon/minicoupon.componen
     MatSortModule,
     MatPaginatorModule,
     MatTabsModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatAutocompleteModule
 
   ],
   providers: [],

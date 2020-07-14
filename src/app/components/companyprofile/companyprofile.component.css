@@ -22,9 +22,10 @@ label{
 .hide{
     display: none;
 }
-mat-form-field{
+.search{
     width: 350px;
     margin-left: 16px;
+    margin-right: 8px;
 }
 .create{
     margin-left: 10px;

@@ -1,14 +1,35 @@
 <div class="container">
-    <img src="assets/product-placeholder.png" alt="" />
-    <div class="coupon-info">
-        {{coupon._title}} 
-        <span class="price">
-            {{coupon._price | currency:'ILS' }}
-        </span><br>
-        <a routerLink="">{{coupon._category}}</a>
-        <span class="bought">
-            {{boughtBy}} bought this
-        </span>
+
+    <div class="search" *ngIf="search">
+
+        <a [routerLink]="['/loading/',coupon._id]">
+            <img [src]="imgPlaceHolder" alt="" />
+        </a>
+
+        {{coupon._title}}
+        <p>
+            {{coupon._description}}
+        </p>
+        {{boughtBy}} people bought this!
+
+    </div>
+    <div *ngIf="!search">
+
+        <a [routerLink]="['/loading/',coupon._id]">
+            <img [src]="imgPlaceHolder" alt="" />
+
+        </a>
+        <div class="coupon-info">
+            {{coupon._title}}
+            <span class="price">
+                {{coupon._price | currency:'ILS' }}
+            </span><br>
+            <a routerLink="">{{coupon._category}}</a>
+            <span class="bought">
+                {{boughtBy}} bought this
+
+            </span>
+        </div>
     </div>
 
 </div>

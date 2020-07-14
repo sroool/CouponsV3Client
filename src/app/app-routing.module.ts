@@ -11,6 +11,7 @@ import { CustomerprofileComponent } from './components/customerprofile/customerp
 import { CompanyprofileComponent } from './components/companyprofile/companyprofile.component';
 import { CouponComponent } from './components/coupon/coupon.component';
 import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.component';
+import { LoadingComponent } from './components/loading/loading.component';
 
 
 const routes: Routes = [
@@ -21,6 +22,7 @@ const routes: Routes = [
   {path: "all-customers", component:AllcustomersComponent, canActivate: [LoginguardService]},
   {path: "customer-profile", component:CustomerprofileComponent, canActivate: [LoginguardService]},
   {path: "company-profile", component:CompanyprofileComponent, canActivate: [LoginguardService]},
+  {path: "loading/:id", component: LoadingComponent, canActivate: [LoginguardService]},
   {path: "coupon/:id", component: CouponComponent, canActivate: [LoginguardService]},
   {path: "**", component:PagenotfoundComponent },
   

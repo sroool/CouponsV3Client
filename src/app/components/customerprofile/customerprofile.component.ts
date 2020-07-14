@@ -15,8 +15,9 @@ export class CustomerprofileComponent implements OnInit {
   customer : Customer;
   coupons: Coupon[];
   search : string;
+  searchOption = "Regular Search";
   dataSource;
-  displayedColumns : string[] = ["image","title","expiry","price"]
+  displayedColumns : string[] = ["image","title","endDate","price"]
   @ViewChild(MatPaginator) paginator : MatPaginator;
   @ViewChild(MatSort) sort : MatSort;
   constructor(private customerService : CustomerService) { }
@@ -27,8 +28,20 @@ export class CustomerprofileComponent implements OnInit {
         this.customer = Customer.getCustomer(success);
         this.coupons = Coupon.getCoupons(this.customer._coupons);
         this.dataSource = new MatTableDataSource(this.coupons);
-        this.dataSource.paginator = this.paginator;
+        console.log(this.searchOption);
+        this.dataSource.filterPredicate = (data, filter) => {
+          if(this.searchOption == "By Category"){
+            return data._category.toString().toLowerCase().indexOf(filter) != -1;
+          }else if(this.searchOption == "By Max Price"){
+            return data._price <= +filter;
+          }else{
+            return this.displayedColumns.some( element =>{
+              data[element].toString().toLowerCase().indexOf(filter) != -1
+            });
+          }
+        }
         this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
       },
       error =>{
         console.log(error);

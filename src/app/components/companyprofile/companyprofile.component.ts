@@ -19,8 +19,9 @@ export class CompanyprofileComponent implements OnInit {
   coupons: Coupon[];
   clients : Customer[];
   search: string;
+  searchOption = "Regular Search";
   dataSource;
-  displayedColumns: string[] = ["image", "title", "category","expiry", "amount","price","bought", "actions"]
+  displayedColumns: string[] = ["image", "title", "category","endDate", "amount","price","bought", "actions"]
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(private companyService: CompanyService, private dialog : MatDialog,
@@ -32,6 +33,17 @@ export class CompanyprofileComponent implements OnInit {
         this.company = Company.getCompany(success);
         this.coupons = Coupon.getCoupons(this.company._coupons);
         this.dataSource = new MatTableDataSource(this.coupons);
+        this.dataSource.filterPredicate = (data, filter) => {
+          if(this.searchOption == "By Category"){
+            return data._category.toString().toLowerCase().indexOf(filter) != -1;
+          }else if(this.searchOption == "By Max Price"){
+            return data._price <= +filter;
+          }else{
+            return this.displayedColumns.some( element => {
+              data[element].toString().toLowerCase().indexOf(filter) != -1;
+            })
+          }
+        }
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
         this.companyService.getAllClients().subscribe(
@@ -78,6 +90,7 @@ export class CompanyprofileComponent implements OnInit {
     this.filterSearch();
   }
   getAmountPurchases(coupon:Coupon){
+   
     return this.clients?.filter( client => client._coupons.some( c=>c._id==coupon._id)).length;
   }
 }

@@ -29,4 +29,8 @@ export class CustomerService {
     let path = this.path + "/all-coupons/" + this.loginService.token;
     return this.client.get<Coupon[]>(path);
   }
+  public purchaseCoupon(coupon : Coupon){
+    let path = this.path + "/purchase-coupon/" + this.loginService.token;
+    return this.client.post(path, coupon, {responseType: "text"});
+  }
 }
