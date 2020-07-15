@@ -5,6 +5,9 @@
     padding: 10px;
     position: relative;
 }
+.coupon-card{
+    min-height: 400px;
+}
 .info{
     display: inline-block;
     position: absolute;

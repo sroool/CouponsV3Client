@@ -4,7 +4,7 @@ import { CustomerService } from 'src/app/services/customer.service';
 import { Customer } from 'src/app/models/customer';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Category } from 'src/app/models/category.enum';
 
 @Component({
@@ -36,7 +36,7 @@ export class CustomerhomeComponent implements OnInit {
     const filterValue = title.toLowerCase();
     return this.options.filter( option => option._title.toLowerCase().includes(filterValue) &&
     (this.searchOption != "All" ? option._category.toString() == this.searchOption : true)
-    );
+    ).slice(0,6);
   }
   display(coupon :Coupon) : string{
     return coupon && coupon._title ? coupon._title : '';

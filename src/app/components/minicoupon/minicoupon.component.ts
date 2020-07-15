@@ -18,10 +18,13 @@ export class MinicouponComponent implements OnInit {
   boughtBy;
   @Input()
   search;
-  imgPlaceHolder="assets/product-placeholder.png";
+  imgPlaceHolder= "assets/product-placeholder.png";
   constructor(private customerService : CustomerService, private router : Router) { }
 
   ngOnInit(): void {
+    if(this.coupon){
+      this.imgPlaceHolder = this.coupon._image;
+    }
     if(!this.boughtBy){
       this.customerService.getCustomersByCoupon(this.coupon._id).subscribe(
         success => {
