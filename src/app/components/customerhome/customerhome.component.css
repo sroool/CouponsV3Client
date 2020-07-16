@@ -10,7 +10,6 @@
     position: absolute;
     z-index: 5;
     top: 185px;
-    background-color: white;
 }
 mat-toolbar {
     height: 120px;
@@ -25,11 +24,13 @@ mat-toolbar a:not(:last-child){
 .search-by{
     position: absolute;
     width: 12%;
-    right: 62px;
+    right: 72px;
     margin-right: 16px;
     top: 185px;
     z-index: 5;
-    background-color: white;
+}
+mat-form-field{
+    background-color: rgb(255,215,64);
 }
 .hide{
     display:none;

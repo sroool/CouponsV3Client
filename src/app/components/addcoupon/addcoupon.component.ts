@@ -45,7 +45,7 @@ export class AddcouponComponent implements OnInit {
     if(this.coupon){
       this.newCoupon.setValue({title: this.coupon._title,category: this.coupon._category,
                               description: this.coupon._description,startDate:this.coupon._startDate,
-                              endDate:this.coupon._endDate,amount:this.coupon._amount,price:this.coupon._price,
+                              endDate:this.coupon._endDate,amount:this.coupon._originalAmount,price:this.coupon._price,
                               image:this.coupon._image});
       this.header = "Update Coupon";
       for(let control in this.newCoupon.controls){
@@ -86,7 +86,7 @@ export class AddcouponComponent implements OnInit {
     const category : Category = this.category.value;
     const coupon : Coupon = new Coupon(0, this.companyId,this.category.value,this.title.value,
                                         this.description.value,this.startDate.value,this.endDate.value,
-                                        this.amount.value,this.price.value,this.image.value);
+                                        this.amount.value,this.amount.value,this.price.value,this.image.value);
     this.companyService.addCoupon(coupon).subscribe(
       success => {
         const snackRef = this.snackBar.open("New Coupon added successfully","dismiss");
@@ -110,7 +110,7 @@ export class AddcouponComponent implements OnInit {
     this.newCoupon.disable();
     const coupon : Coupon = new Coupon(this.coupon._id, this.companyId,this.category.value,this.title.value,
                                         this.description.value,this.startDate.value,this.endDate.value,
-                                        this.amount.value,this.price.value,this.image.value);
+                                        this.amount.value,this.amount.value,this.price.value,this.image.value);
     this.companyService.updateCoupon(coupon).subscribe(
       success => {
         const snackRef = this.snackBar.open("Coupon updated successfully","dismiss");

@@ -1,6 +1,8 @@
 <div class="container">
-
-    <div class="search" *ngIf="search">
+    <div *ngIf="!coupon">
+        <mat-spinner color="accent" [diameter]="60"></mat-spinner>
+    </div>
+    <div class="search" *ngIf="search && coupon">
 
         <a [routerLink]="['/loading/',coupon._id]">
             <img [src]="imgPlaceHolder" alt="" />
@@ -13,7 +15,7 @@
         {{boughtBy}} people bought this!
 
     </div>
-    <div *ngIf="!search">
+    <div *ngIf="!search && coupon">
 
         <a [routerLink]="['/loading/',coupon._id]">
             <img [src]="imgPlaceHolder" alt="" />

@@ -40,10 +40,12 @@
             <mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
                 <ng-container matColumnDef="image">
                     <mat-header-cell *matHeaderCellDef>image</mat-header-cell>
-                    <mat-cell *matCellDef="let element">{{element._image}}</mat-cell>
+                    <mat-cell *matCellDef="let element">
+                        <img [src]="element._image" [alt]="element._title" width="90" height="90" [title]="element._title" />
+                    </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="title">
-                    <mat-header-cell *matHeaderCellDef>Title</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef colspan="2">Title</mat-header-cell>
                     <mat-cell *matCellDef="let element">
                         {{element._title}} <br>
                         {{element._description}} <br>

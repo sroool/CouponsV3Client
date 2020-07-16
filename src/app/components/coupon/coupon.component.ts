@@ -1,3 +1,4 @@
+import { LoginService } from 'src/app/services/login.service';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Coupon } from 'src/app/models/coupon';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -18,21 +19,19 @@ export class CouponComponent implements OnInit {
   couponId: number;
   disableBuyButton = false;
   otherCustomers: Customer[];
+  otherCustomersCoupons: Coupon[];
+  recentlyViewedCoupons: Coupon[]=[];
   purchaseAmount: number;
 
-  recommended: Suggestion[] = [];
-  recommendedTemp : Suggestion[] = [];
-  canShowRecommended = false;
-  recommendedIds: number[] = [];
   countDown;
   constructor(private activeRoute: ActivatedRoute, private customerService: CustomerService,
-    private dialog: MatDialog, private snackBar: MatSnackBar, private router : Router) { }
- 
+    private dialog: MatDialog, private snackBar: MatSnackBar, private router: Router, private loginService : LoginService) { }
 
   ngOnInit(): void {
     this.couponId = this.activeRoute.snapshot.params['id'];
     this.customerService.getCouponById(this.couponId).subscribe(
       success => {
+        this.loginService.updateRecentlyViewed(this.couponId);
         this.coupon = Coupon.getCoupon(success);
         setInterval(() => {
           this.countDown = this.remainingTime();
@@ -40,32 +39,9 @@ export class CouponComponent implements OnInit {
         this.customerService.getCustomersByCoupon(this.couponId).subscribe(
           success => {
             this.otherCustomers = Customer.getCustomers(success);
-            this.purchaseAmount = this.otherCustomers.length;
-            for (let customer of this.otherCustomers) {
-              for (let coupon of customer._coupons) {
-                if (!this.recommendedIds.includes(coupon._id)) {
-                  this.recommendedTemp.push({ "count": -1, "coupon": coupon });
-                  this.recommendedIds.push(coupon._id);
-                }
-              }
-            }
-            for(let i = 0 ; i<this.recommendedIds.length; i++){
-              this.customerService.getCustomersByCoupon(this.recommendedIds[i]).subscribe(
-                success => {
-                  this.updateCount(this.recommendedTemp[i].coupon, Customer.getCustomers(success).length);
-                 if(this.recommendedTemp.every( suggestion => suggestion.count != -1 )){
-                   this.recommendedTemp.sort( (a:Suggestion,b:Suggestion) => b.count - a.count);
-                   for(let i=0;i<5;i++){
-                     this.recommended.push(this.recommendedTemp[i]);
-                   }
-                   this.canShowRecommended=true;
-                 }
-                 
-                }, error => {
-                  console.log(error);
-                }
-              )
-            }
+            this.otherCustomersCoupons = this.otherCustomers.map(customer => customer._coupons).reduce((acc, curr) => acc.concat(curr));
+            this.otherCustomersCoupons = this.filterDuplicates(this.otherCustomersCoupons);
+            this.otherCustomersCoupons = this.otherCustomersCoupons.filter(coupon => this.sharedCoupon(this.otherCustomers, coupon)).sort(this.sortByBought).slice(0, 5);
           },
           error => {
             console.log(error);
@@ -73,39 +49,64 @@ export class CouponComponent implements OnInit {
         )
       },
       error => {
-        if(error.status == 400){
+        if (error.status == 400) {
           this.router.navigateByUrl("/not-found");
         }
       }
     )
+    this.showRecentlyViewed();
   }
-  purchaseCoupon(){
+  showRecentlyViewed(){
+    let ids : number[] = this.loginService.getRecentlyViewed().map(id => +id);
+    ids.forEach( id => this.customerService.getCouponById(id).subscribe(
+      success => {
+        this.recentlyViewedCoupons.push( Coupon.getCoupon(success));
+      },error =>{
+        console.log(error);
+      }
+    ))
+    
+    
+  }
+  purchaseCoupon() {
     this.disableBuyButton = true;
     this.customerService.purchaseCoupon(this.coupon).subscribe(
       success => {
-        const snackRef = this.snackBar.open(success,"dismiss");
+        const snackRef = this.snackBar.open(success, "dismiss");
       },
       error => {
-        let errorMessage : string = error.error;
-        if(error.status == 0 || error.status == 500){
+        let errorMessage: string = error.error;
+        if (error.status == 0 || error.status == 500) {
           errorMessage = "Oops, try again later!";
         }
-        const snackRef = this.snackBar.open(errorMessage,"dismiss");
-        snackRef.onAction().subscribe( ()=>{
+        const snackRef = this.snackBar.open(errorMessage, "dismiss");
+        snackRef.onAction().subscribe(() => {
           this.disableBuyButton = false;
         })
       }
     )
   }
-  
-  updateCount(coupon: Coupon, amount: number) {
-    for (let suggestion of this.recommendedTemp) {
-      if (suggestion.coupon._id == coupon._id) {
-        suggestion.count = amount;
-        break;
+
+
+  sharedCoupon(customers: Customer[], coupon: Coupon): boolean {
+    if (customers.every(customer => customer._coupons.some(coup => coup._id == coupon._id))) {
+      return true;
+    }
+    return false;
+  }
+  sortByBought(a: Coupon, b: Coupon) {
+    return b._bought - a._bought;
+  }
+  filterDuplicates(coupons: Coupon[]) {
+    let newCoupons: Coupon[] = new Array<Coupon>();
+    let newCouponsId: number[] = [];
+    for (let coupon of coupons) {
+      if (!newCouponsId.includes(coupon._id)) {
+        newCoupons.push(coupon);
+        newCouponsId.push(coupon._id);
       }
     }
-
+    return newCoupons;
   }
 
   limitedTime() {
@@ -125,7 +126,4 @@ export class CouponComponent implements OnInit {
     return timeLeftHours + ":" + timeLeftMinutes + ":" + timeLeftSeconds;
   }
 }
-class Suggestion {
-  constructor(public count: number, public coupon: Coupon) { }
 
-}

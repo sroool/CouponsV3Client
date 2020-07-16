@@ -23,15 +23,24 @@
 
                 </div>
             </div>
-            {{couponId}}
+      
         </div>
         <hr>
-        <div class="additional" *ngIf="canShowRecommended && recommended">
+        <div class="additional">
             <p>People who bought {{coupon?._title}} Also enjoyed these:</p>
             <div class="additional-coupons">
 
-                <app-minicoupon *ngFor="let suggestion of recommended" [boughtBy]="suggestion.count"
-                    [coupon]="suggestion.coupon"></app-minicoupon>
+                <app-minicoupon *ngFor="let coupon of otherCustomersCoupons" [boughtBy]="coupon._bought"
+                    [coupon]="coupon"></app-minicoupon>
+            </div>
+        </div>
+        <hr>
+        <div class="additional" *ngIf="recentlyViewedCoupons">
+            <p>You were recently interested in these coupons:</p>
+            <div class="additional-coupons">
+
+                <app-minicoupon *ngFor="let coupon of recentlyViewedCoupons" [boughtBy]="coupon._bought"
+                    [coupon]="coupon"></app-minicoupon>
             </div>
         </div>
     </div>

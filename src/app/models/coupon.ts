@@ -1,6 +1,7 @@
 import { Category } from './category.enum';
 
 export class Coupon {
+    private bought : number;
     constructor( private id : number,
                  private companyId : number,
                  private category : Category,
@@ -8,10 +9,13 @@ export class Coupon {
                  private description : string,
                  private startDate : Date,
                  private endDate : Date,
-                 private amount :  number,
+                 private originalAmount :  number,
+                 private currentAmount : number,
                  private price : number,
                  private image : string
-        ){}
+        ){
+            this.bought = originalAmount - currentAmount;
+        }
     get _id() : number{
         return this.id;
     }
@@ -55,11 +59,20 @@ export class Coupon {
     set _endDate(endDate : Date){
         this.endDate = endDate;
     }
-    get _amount() : number{
-        return this.amount;
+    get _originalAmount() : number{
+        return this.originalAmount;
     }
-    set _amount(amount : number) {
-        this.amount = amount;
+    set _originalAmount(originalAmount : number) {
+        this.originalAmount = originalAmount;
+    }
+    get _currentAmount() : number{
+        return this.currentAmount;
+    }
+    set _currentAmount(currentAmount : number){
+        this.currentAmount = currentAmount;
+    }
+    get _bought() : number{
+        return this.bought;
     }
     get _price() : number{
         return this.price;
@@ -75,8 +88,9 @@ export class Coupon {
     }
     public static getCoupon(obj : Coupon){
         let coupon : Coupon = new Coupon(obj.id,obj.companyId,obj.category,obj.title,
-                                         obj.description,obj.startDate,obj.endDate,obj.amount,
-                                         obj.price,obj.image);
+                                         obj.description,obj.startDate,obj.endDate,
+                                         obj.originalAmount,obj.currentAmount,obj.price,obj.image);
+
         return coupon;
     }
     public static getCoupons(obj : Coupon[]){

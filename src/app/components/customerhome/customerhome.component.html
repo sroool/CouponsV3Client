@@ -1,12 +1,12 @@
 <div class="container">
-    <div class="overlay" *ngIf="autoComplete.value" (click)="overlayOff()"></div>
+    <div class="overlay" *ngIf="autoComplete.value" (click)="clearSearch()"></div>
     <div>
         <mat-toolbar color="accent"><span class="categories">
             <a mat-button [routerLink]="['/category/',category]" *ngFor="let category of categories">{{category}}</a></span></mat-toolbar>
         <div class="search-box">
-            <mat-form-field class="search">
+            <mat-form-field class="search" color="primary">
                 <mat-label>Search coupon</mat-label>
-                <input type="search" matInput (input)="clearOptions()" [formControl]="autoComplete" />
+                <input type="search" matInput (input)="searchListener()" [formControl]="autoComplete" />
                 <button mat-icon-button matSuffix *ngIf="autoComplete.value" (click)="clearSearch()">
                     <mat-icon>cancel</mat-icon>
                 </button>
@@ -19,8 +19,8 @@
                 </mat-select>
             </mat-form-field>
         </div>
-        <div class="search-coupons offers mat-elevation-z8" [ngClass]="{'hide':autoComplete.value==''}">
-            <app-minicoupon *ngFor="let coupon of optionsObs | async" [coupon]="coupon" [search]="true">
+        <div class="search-coupons offers mat-elevation-z8" *ngIf="autoComplete.value">
+            <app-minicoupon *ngFor="let coupon of optionsB" [coupon]="coupon" [search]="true">
             </app-minicoupon>
         </div>
     </div>
@@ -40,65 +40,54 @@
         <div class="top-picks mat-elevation-z8">
             <h2>Customers Top Picks</h2>
             <div class="top-picks-coupons offers">
-                <app-minicoupon *ngFor="let suggestion of topPicksCoupons" [coupon]="suggestion.coupon"
-                    [boughtBy]="suggestion.count"></app-minicoupon>
+                <app-minicoupon *ngFor="let coupon of topPicksCoupons" [coupon]="coupon"
+                    [boughtBy]="coupon._bought"></app-minicoupon>
+            </div>
+        </div>
+        
+        <div class="elec mat-elevation-z8">
+            <h2>Electricity</h2>
+            <div class="elec-coupons offers">
+                <app-minicoupon *ngFor="let coupon of electricityCoupons" [coupon]="coupon"
+                    [boughtBy]="coupon._bought"></app-minicoupon>
+            </div>
+        </div>
+    
+        <div class="fashion mat-elevation-z8">
+            <h2>Fashion</h2>
+            <div class="fashion-coupons offers">
+                <app-minicoupon *ngFor="let coupon of fashionCoupons" [coupon]="coupon"
+                    [boughtBy]="coupon._bought"></app-minicoupon>
             </div>
         </div>
         <div class="food mat-elevation-z8">
             <h2>Food</h2>
             <div class="food-coupons offers">
-                <app-minicoupon *ngFor="let suggestion of foodCoupons" [coupon]="suggestion.coupon"
-                    [boughtBy]="suggestion.count"></app-minicoupon>
-            </div>
-        </div>
-        <div class="elec mat-elevation-z8">
-            <h2>Electricity</h2>
-            <div class="elec-coupons offers">
-                <app-minicoupon *ngFor="let suggestion of electricityCoupons" [coupon]="suggestion.coupon"
-                    [boughtBy]="suggestion.count"></app-minicoupon>
-            </div>
-        </div>
-        <div class="vacation mat-elevation-z8">
-            <h2>Vacation</h2>
-            <div class="vacation-coupons offers">
-                <app-minicoupon *ngFor="let suggestion of vacationCoupons" [coupon]="suggestion.coupon"
-                    [boughtBy]="suggestion.count"></app-minicoupon>
-            </div>
-        </div>
-        <div class="fashion mat-elevation-z8">
-            <h2>Fashion</h2>
-            <div class="fashion-coupons offers">
-                <app-minicoupon *ngFor="let suggestion of fashionCoupons" [coupon]="suggestion.coupon"
-                    [boughtBy]="suggestion.count"></app-minicoupon>
+                <app-minicoupon *ngFor="let coupon of foodCoupons" [coupon]="coupon"
+                    [boughtBy]="coupon._bought"></app-minicoupon>
             </div>
         </div>
         <div class="pets mat-elevation-z8">
             <h2>Pets</h2>
             <div class="pets-coupons offers">
-                <app-minicoupon *ngFor="let suggestion of petsCoupons" [coupon]="suggestion.coupon"
-                    [boughtBy]="suggestion.count"></app-minicoupon>
+                <app-minicoupon *ngFor="let coupon of petsCoupons" [coupon]="coupon"
+                    [boughtBy]="coupon._bought"></app-minicoupon>
             </div>
         </div>
 
-        <div class="tourism mat-elevation-z8">
-            <h2>Tourism</h2>
-            <div class="tourism-coupons offers">
-                <app-minicoupon *ngFor="let suggestion of tourismCoupons" [coupon]="suggestion.coupon"
-                    [boughtBy]="suggestion.count"></app-minicoupon>
-            </div>
-        </div>
+     
         <div class="furniture mat-elevation-z8">
             <h2>Furniture</h2>
-            <div class="furntire-coupons offers">
-                <app-minicoupon *ngFor="let suggestion of furnitureCoupons" [coupon]="suggestion.coupon"
-                    [boughtBy]="suggestion.count"></app-minicoupon>
+            <div class="furniture-coupons offers">
+                <app-minicoupon *ngFor="let coupon of furnitureCoupons" [coupon]="coupon"
+                    [boughtBy]="coupon._bought"></app-minicoupon>
             </div>
         </div>
         <div class="spa mat-elevation-z8">
             <h2>Spa</h2>
             <div class="spa-coupons offers">
-                <app-minicoupon *ngFor="let suggestion of spaCoupons" [coupon]="suggestion.coupon"
-                    [boughtBy]="suggestion.count"></app-minicoupon>
+                <app-minicoupon *ngFor="let coupon of spaCoupons" [coupon]="coupon"
+                    [boughtBy]="coupon._bought"></app-minicoupon>
             </div>
         </div> <br>
         Fashion

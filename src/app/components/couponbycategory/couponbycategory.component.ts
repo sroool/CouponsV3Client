@@ -19,9 +19,10 @@ export class CouponbycategoryComponent implements OnInit {
     return Category.Food;
   }
   ngOnInit(): void {
-    this.category = this.toCategory(this.activeRoute.snapshot.params["category"]);
+    let elec : Category = (<any>Category)['Food'];
+    this.category = (<any>Category)[this.activeRoute.snapshot.params["category"]];
     this.categoryName = Category[this.category];
-    this.customerService.getAllCouponsByCategory(0).subscribe(
+    this.customerService.getAllCouponsByCategory(this.category).subscribe(
       success =>{
         let couponsTemp = Coupon.getCoupons(success);
         

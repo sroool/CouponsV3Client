@@ -29,6 +29,7 @@ export class NavbarComponent implements OnInit {
   }
   createCustomer(){
     let config : MatDialogConfig  = new MatDialogConfig();
+    config.position = {left:"0px",top:"0px"};
     config.autoFocus = true;
     config.disableClose = true;
     config.width = "40%";
