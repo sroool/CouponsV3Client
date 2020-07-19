@@ -7,7 +7,6 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { SignupComponent } from './components/signup/signup.component';
 import { LoginComponent } from './components/login/login.component';
 import { HttpClientModule } from "@angular/common/http";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
@@ -25,8 +24,8 @@ import { MatMenuModule } from "@angular/material/menu";
 import { MatTableModule } from "@angular/material/table";
 import { MatSortModule } from "@angular/material/sort";
 import { MatPaginatorModule } from "@angular/material/paginator"
-import {MatTabsModule} from '@angular/material/tabs';
-import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatTabsModule} from '@angular/material/tabs';
+import { MatDatepickerModule} from '@angular/material/datepicker';
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
 
 
@@ -34,7 +33,6 @@ import { AllcompaniesComponent } from './components/allcompanies/allcompanies.co
 import { AllcustomersComponent } from './components/allcustomers/allcustomers.component';
 import { AddcompanyComponent } from './components/addcompany/addcompany.component';
 import { AddcustomerComponent } from './components/addcustomer/addcustomer.component';
-import { MyprofileComponent } from './components/myprofile/myprofile.component';
 import { CustomerprofileComponent } from './components/customerprofile/customerprofile.component';
 import { CompanyprofileComponent } from './components/companyprofile/companyprofile.component';
 import { AddcouponComponent } from './components/addcoupon/addcoupon.component';
@@ -53,12 +51,12 @@ import { CouponbycategoryComponent } from './components/couponbycategory/couponb
     HomeComponent,
     NavbarComponent,
     LoginComponent,
-    SignupComponent,
+  
     AllcompaniesComponent,
     AllcustomersComponent,
     AddcompanyComponent,
     AddcustomerComponent,
-    MyprofileComponent,
+    
     CustomerprofileComponent,
     CompanyprofileComponent,
     AddcouponComponent,

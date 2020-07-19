@@ -6,6 +6,7 @@
         <div class="search-box">
             <mat-form-field class="search" color="primary">
                 <mat-label>Search coupon</mat-label>
+                <mat-spinner matPrefix *ngIf="autoComplete.value?.length > 0 && autoComplete.value?.length < 3" [diameter]="30" color="primary"></mat-spinner>
                 <input type="search" matInput (input)="searchListener()" [formControl]="autoComplete" />
                 <button mat-icon-button matSuffix *ngIf="autoComplete.value" (click)="clearSearch()">
                     <mat-icon>cancel</mat-icon>
@@ -90,17 +91,7 @@
                     [boughtBy]="coupon._bought"></app-minicoupon>
             </div>
         </div> <br>
-        Fashion
-        <br>
-        Pets
-        <br>
-        Tourism
-        <br>
-        Furniture
-        <br>
-        Spa
-        <br>
-        recently viewed
+      
     </div>
 
 </div>

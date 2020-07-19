@@ -29,7 +29,6 @@ export class CustomerprofileComponent implements OnInit {
         this.customer = Customer.getCustomer(success);
         this.coupons = Coupon.getCoupons(this.customer._coupons);
         this.dataSource = new MatTableDataSource(this.coupons);
-        console.log(this.searchOption);
         this.dataSource.filterPredicate = (data, filter) => {
           if(this.searchOption == "By Category"){
             return data._category.toString().toLowerCase().indexOf(filter) != -1;
@@ -37,8 +36,8 @@ export class CustomerprofileComponent implements OnInit {
             return data._price <= +filter;
           }else{
             return this.displayedColumns.some( element =>{
-              data[element].toString().toLowerCase().indexOf(filter) != -1
-            });
+              return element != "image" && data[element].toString().toLowerCase().indexOf(filter) != -1
+            }); 
           }
         }
         this.dataSource.sort = this.sort;

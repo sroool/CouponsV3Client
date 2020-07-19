@@ -40,7 +40,9 @@
             <mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
                 <ng-container matColumnDef="image">
                     <mat-header-cell *matHeaderCellDef>image</mat-header-cell>
-                    <mat-cell *matCellDef="let element">{{element._image}}</mat-cell>
+                    <mat-cell *matCellDef="let element">
+                        <img [src]="element._image" [alt]="element._title" width="90" height="90" [title]="element._title" />
+                    </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="title">
                     <mat-header-cell *matHeaderCellDef>description</mat-header-cell>
@@ -58,25 +60,26 @@
                 <ng-container matColumnDef="endDate">
                     <mat-header-cell *matHeaderCellDef>Valid through</mat-header-cell>
                     <mat-cell *matCellDef="let element">
-                        {{element._startDate}} to {{element._endDate}}
+                        {{element._startDate}} to<br> 
+                        {{element._endDate}}
                     </mat-cell>
                 </ng-container>
-                <ng-container matColumnDef="amount">
+                <ng-container matColumnDef="originalAmount">
                     <mat-header-cell *matHeaderCellDef>Amount </mat-header-cell>
                     <mat-cell *matCellDef="let element">
-                        {{element._amount}}
-                    </mat-cell>
-                </ng-container>
-                <ng-container matColumnDef="price">
-                    <mat-header-cell *matHeaderCellDef>Price</mat-header-cell>
-                    <mat-cell *matCellDef="let element">
-                        {{element._price}}
+                        {{element._currentAmount}} / {{element._originalAmount}}
                     </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="bought">
                     <mat-header-cell *matHeaderCellDef>Amount of purchases</mat-header-cell>
                     <mat-cell *matCellDef="let element">
-                        {{getAmountPurchases(element)}}                        
+                        {{element._bought}}                        
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="price">
+                    <mat-header-cell *matHeaderCellDef>Price</mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        {{element._price | currency: 'ILS'}}
                     </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="actions">

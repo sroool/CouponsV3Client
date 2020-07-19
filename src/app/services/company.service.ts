@@ -9,7 +9,7 @@ import { Customer } from '../models/customer';
   providedIn: 'root'
 })
 export class CompanyService {
-  path = "http://localhost:8080/company"
+  path = "/company"
   constructor(private client : HttpClient, private loginService : LoginService) { }
   public getCompanyDetails() {
     const path : string = this.path + "/company-details/" + this.loginService.token;

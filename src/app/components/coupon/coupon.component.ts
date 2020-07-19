@@ -2,7 +2,6 @@ import { LoginService } from 'src/app/services/login.service';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Coupon } from 'src/app/models/coupon';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CouponService } from 'src/app/services/coupon.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomerService } from 'src/app/services/customer.service';
@@ -20,12 +19,12 @@ export class CouponComponent implements OnInit {
   disableBuyButton = false;
   otherCustomers: Customer[];
   otherCustomersCoupons: Coupon[];
-  recentlyViewedCoupons: Coupon[]=[];
+  recentlyViewedCoupons: Coupon[] = [];
   purchaseAmount: number;
 
   countDown;
   constructor(private activeRoute: ActivatedRoute, private customerService: CustomerService,
-    private dialog: MatDialog, private snackBar: MatSnackBar, private router: Router, private loginService : LoginService) { }
+    private dialog: MatDialog, private snackBar: MatSnackBar, private router: Router, private loginService: LoginService) { }
 
   ngOnInit(): void {
     this.couponId = this.activeRoute.snapshot.params['id'];
@@ -44,29 +43,43 @@ export class CouponComponent implements OnInit {
             this.otherCustomersCoupons = this.otherCustomersCoupons.filter(coupon => this.sharedCoupon(this.otherCustomers, coupon)).sort(this.sortByBought).slice(0, 5);
           },
           error => {
-            console.log(error);
+            let errorMessage: string = error.error;
+            if (error.status == 0 || error.status == 500) {
+              errorMessage = "Oops, try again later";
+            }
+            const snackRef = this.snackBar.open(errorMessage, "dismiss");
           }
         )
       },
       error => {
         if (error.status == 400) {
           this.router.navigateByUrl("/not-found");
+          return;
         }
+        let errorMessage: string = error.error;
+        if (error.status == 0 || error.status == 500) {
+          errorMessage = "Oops, try again later";
+        }
+        const snackRef = this.snackBar.open(errorMessage, "dismiss");
       }
     )
     this.showRecentlyViewed();
   }
-  showRecentlyViewed(){
-    let ids : number[] = this.loginService.getRecentlyViewed().map(id => +id);
-    ids.forEach( id => this.customerService.getCouponById(id).subscribe(
+  showRecentlyViewed() {
+    let ids: number[] = this.loginService.getRecentlyViewed().map(id => +id);
+    ids.forEach(id => this.customerService.getCouponById(id).subscribe(
       success => {
-        this.recentlyViewedCoupons.push( Coupon.getCoupon(success));
-      },error =>{
-        console.log(error);
+        this.recentlyViewedCoupons.push(Coupon.getCoupon(success));
+      }, error => {
+        let errorMessage: string = error.error;
+        if (error.status == 0 || error.status == 500) {
+          errorMessage = "Oops, try again later";
+        }
+        const snackRef = this.snackBar.open(errorMessage, "dismiss");
       }
     ))
-    
-    
+
+
   }
   purchaseCoupon() {
     this.disableBuyButton = true;

@@ -20,6 +20,13 @@ export class NavbarComponent implements OnInit {
     const t : ClientType = ClientType.Administrator;
     
   }
+  goHome(){
+    if(this.loginService.clientType == "Company"){
+      this.router.navigateByUrl("/company-profile")
+    }else{
+      this.router.navigateByUrl("/home")
+    }
+  }
   createCompany(){
     let config : MatDialogConfig  = new MatDialogConfig();
     config.autoFocus = true;
@@ -29,7 +36,7 @@ export class NavbarComponent implements OnInit {
   }
   createCustomer(){
     let config : MatDialogConfig  = new MatDialogConfig();
-    config.position = {left:"0px",top:"0px"};
+   
     config.autoFocus = true;
     config.disableClose = true;
     config.width = "40%";

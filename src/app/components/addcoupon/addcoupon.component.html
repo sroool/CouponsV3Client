@@ -61,7 +61,7 @@
             </mat-form-field>
             <div class="actions">
                 <button mat-raised-button [disabled]="!newCoupon.valid" (click)="saveCoupon()">{{header}}</button>
-                <button mat-raised-button [disabled]="disableDelete" (click)="deleteCoupon()" *ngIf="coupon">Delete Coupon</button>
+                <button mat-raised-button [disabled]="disableDeleteButton" (click)="deleteCoupon()" *ngIf="coupon">Delete Coupon</button>
             </div>
         </form>
     </div>

@@ -24,7 +24,7 @@ mat-toolbar a:not(:last-child){
 .search-by{
     position: absolute;
     width: 12%;
-    right: 72px;
+    right: 102px;
     margin-right: 16px;
     top: 185px;
     z-index: 5;
@@ -50,7 +50,7 @@ mat-form-field{
 .search-coupons{
     grid-template-columns: 33% 33% 33%;
     position: absolute;
-    left: 79px;
+    left: 110px;
     top: 245px;
     width: 75%;
     z-index: 5;

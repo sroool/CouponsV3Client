@@ -1,4 +1,5 @@
 <div class="container">
+    
     <div >
         <mat-toolbar color="accent">
             <h2>{{title}}</h2>
@@ -6,6 +7,7 @@
             <button mat-icon-button (click)="close()"><mat-icon>cancel</mat-icon></button>
         </mat-toolbar>
         <form [formGroup]="newCompany">
+       
             <mat-form-field *ngIf="company">
                 <mat-label>ID</mat-label>
                 <input matInput formControlName="id">
@@ -36,7 +38,7 @@
             </mat-form-field>
             
             <button mat-raised-button [disabled]="!newCompany.valid" (click)="saveCompany()">{{title}}</button>
-            <button mat-raised-button (click)="deleteCompany()" *ngIf="company">Delete Company</button>
+            <button mat-raised-button [disabled]="disableDeleteButton" (click)="deleteCompany()" *ngIf="company">Delete Company</button>
         </form>
     </div>
     </div>

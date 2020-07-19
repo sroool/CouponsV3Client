@@ -41,7 +41,7 @@
             </mat-form-field>
             
             <button mat-raised-button [disabled]="!newCustomer.valid" (click)="saveCustomer()">{{title}}</button>
-            <button mat-raised-button (click)="deleteCustomer()" *ngIf="customer">Delete Customer</button>
+            <button mat-raised-button [disabled]="disableDeleteButton" (click)="deleteCustomer()" *ngIf="customer">Delete Customer</button>
         </form>
     </div>
     </div>

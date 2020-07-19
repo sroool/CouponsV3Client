@@ -1,4 +1,5 @@
 export enum Category {
-    Food, Electricity, Vacation, Fashion, Pets, Tourism, Furniture, Spa
+    Food, Electricity, Fashion, Pets, Tourism, Furniture, Spa
+    
    
 }

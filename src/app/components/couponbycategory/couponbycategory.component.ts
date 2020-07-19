@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CustomerService } from 'src/app/services/customer.service';
@@ -13,34 +14,27 @@ import { Customer } from 'src/app/models/customer';
 export class CouponbycategoryComponent implements OnInit {
   category : Category;
   categoryName : string;
-  coupons : Suggestion[] = [];
-  constructor(private activeRoute : ActivatedRoute, private customerService : CustomerService) { }
+  coupons : Coupon[] = [];
+  constructor(private activeRoute : ActivatedRoute, private customerService : CustomerService, private snackBar : MatSnackBar) { }
   toCategory(text) : Category{
     return Category.Food;
   }
   ngOnInit(): void {
-    let elec : Category = (<any>Category)['Food'];
     this.category = (<any>Category)[this.activeRoute.snapshot.params["category"]];
     this.categoryName = Category[this.category];
     this.customerService.getAllCouponsByCategory(this.category).subscribe(
       success =>{
-        let couponsTemp = Coupon.getCoupons(success);
-        
-        couponsTemp.forEach( coupon => {
-          this.customerService.getCustomersByCoupon(coupon._id).subscribe(
-            success => {
-              let customersTemp : Customer[] = Customer.getCustomers(success);
-              this.coupons.push({"count":customersTemp.length,"coupon":coupon});
-              this.coupons.sort( (a:Suggestion,b:Suggestion)=>b.count-a.count);
+        this.coupons = Coupon.getCoupons(success).sort( (a:Coupon,b:Coupon)=>b._bought-a._bought);
+     
+      },
+      error => {
+        let errorMessage: string = error.error;
+            if (error.status == 0 || error.status == 500) {
+              errorMessage = "Oops, try again later";
             }
-          )
-        })
+            const snackRef = this.snackBar.open(errorMessage, "dismiss");
       }
     )
   }
-
-}
-class Suggestion {
-  constructor(public count: number, public coupon: Coupon) { }
 
 }

@@ -1,10 +1,10 @@
 <div class="container">
-    <h1>Home</h1>
+    <h1>Welcome to Couponara</h1>
     <ng-container *ngIf="loginService.clientType?.toString() == 'Administrator'">
         <app-adminhome></app-adminhome>
     </ng-container>
     <ng-container *ngIf="loginService.clientType?.toString() == 'Company'">
-        <app-companyhome></app-companyhome>
+        <app-companyprofile></app-companyprofile>
     </ng-container>
     <ng-container *ngIf="loginService.clientType?.toString() == 'Customer'">
         <app-customerhome></app-customerhome>

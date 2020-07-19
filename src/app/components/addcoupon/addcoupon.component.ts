@@ -15,7 +15,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class AddcouponComponent implements OnInit {
   header : string = "Add Coupon";
   newCoupon : FormGroup;
-  disableDelete = false;
+  disableDeleteButton = false;
   companyId : number;
   possibleCategories = Object.values(Category).filter(category => isNaN(+category));
   constructor(private dialog : MatDialogRef<AddcouponComponent>,
@@ -29,7 +29,11 @@ export class AddcouponComponent implements OnInit {
         this.companyId = Company.getCompany(success)._id;
       },
       error =>{
-        console.log(error);
+        let errorMessage : string = error.error;
+        if(error.status == 0|| error.status == 500){
+          errorMessage = "oops, try again later", "dismiss";
+        }
+        const snackRef = this.snackBar.open(errorMessage, "dismiss");
       }
     )
     this.newCoupon = this.fb.group({
@@ -108,6 +112,7 @@ export class AddcouponComponent implements OnInit {
   }
   updateCoupon(){
     this.newCoupon.disable();
+    this.disableDeleteButton = true;
     const coupon : Coupon = new Coupon(this.coupon._id, this.companyId,this.category.value,this.title.value,
                                         this.description.value,this.startDate.value,this.endDate.value,
                                         this.amount.value,this.amount.value,this.price.value,this.image.value);
@@ -126,13 +131,14 @@ export class AddcouponComponent implements OnInit {
         const snackRef = this.snackBar.open(errorMessage,"dismiss");
         snackRef.onAction().subscribe( ()=>{
           this.newCoupon.enable();
+          this.disableDeleteButton = false;
         })
       }
     )
   }
   deleteCoupon(){
     this.newCoupon.disable();
-    this.disableDelete = true;
+    this.disableDeleteButton = true;
     this.companyService.deleteCoupon(this.coupon._id).subscribe(
       success => {
         const snackRef = this.snackBar.open(success,"dismiss");
@@ -148,6 +154,7 @@ export class AddcouponComponent implements OnInit {
         const snackRef = this.snackBar.open(errorMessage, "dismiss");
         snackRef.onAction().subscribe( ()=>{
           this.newCoupon.enable();
+          this.disableDeleteButton = false;
         })
       }
     )

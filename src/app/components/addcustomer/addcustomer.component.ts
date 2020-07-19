@@ -16,6 +16,7 @@ export class AddcustomerComponent implements OnInit {
   type = "password";
   title = "Add Customer";
   newCustomer : FormGroup;
+  disableDeleteButton = false;
   constructor(private fb: FormBuilder, private adminService : AdminService,
               private snackBar : MatSnackBar, private dialog : MatDialogRef<AddcustomerComponent>,
               @Inject(MAT_DIALOG_DATA)public customer :Customer) { }
@@ -74,7 +75,8 @@ export class AddcustomerComponent implements OnInit {
   }
   updateCustomer(){
     this.newCustomer.disable();
-    const customer : Customer = new Customer(this.id.value,this.fname.value,this.lname.value,this.email.value,this.password.value);
+    this.disableDeleteButton = true;
+    const customer : Customer = new Customer(this.id.value,this.fname.value,this.lname.value,this.email.value,this.password.value, this.customer._coupons);
     this.adminService.updateCustomer(customer).subscribe(
       success =>{
         const snackRef = this.snackBar.open("Customer updated succesfully!", "dismiss");
@@ -89,12 +91,14 @@ export class AddcustomerComponent implements OnInit {
         const snackRef = this.snackBar.open(errorMessage, "dismiss");
         snackRef.onAction().subscribe( ()=>{
           this.newCustomer.enable();
+          this.disableDeleteButton = false;
         })
       }
     )
   }
   deleteCustomer(){
     this.newCustomer.disable();
+    this.disableDeleteButton = true;
     this.adminService.deleteCustomer(this.id.value).subscribe(
       success =>{
         const snackRef = this.snackBar.open("Customer deleted succesfully", "dismiss");
@@ -109,6 +113,7 @@ export class AddcustomerComponent implements OnInit {
         const snackRef = this.snackBar.open(errorMessage, "dismiss");
         snackRef.onAction().subscribe( ()=>{
           this.newCustomer.enable();
+          this.disableDeleteButton = false;
         })
       }
     )

@@ -16,7 +16,7 @@
                     <button mat-raised-button color="accent" [disabled]="disableBuyButton"
                         (click)="purchaseCoupon()">Buy
                         NOW!</button>
-                    <p>{{purchaseAmount}} other people bought this coupon </p>
+                    <p>{{coupon?._bought}} other people bought this coupon </p>
                     <p class="count-down" *ngIf="limitedTime()">
                         ONLY {{ countDown }} HOURS LEFT! HURRY!
                     </p>

@@ -26,7 +26,7 @@
             <span class="price">
                 {{coupon._price | currency:'ILS' }}
             </span><br>
-            <a routerLink="">{{coupon._category}}</a>
+            <a [routerLink]="['/category/',coupon._category]">{{coupon._category}}</a>
             <span class="bought">
                 {{boughtBy}} bought this
 

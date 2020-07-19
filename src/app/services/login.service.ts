@@ -10,7 +10,7 @@ import { Customer } from '../models/customer';
   providedIn: 'root'
 })
 export class LoginService {
-  path = "http://localhost:8080/login";
+  path = "/login";
   authenticated = 0;
   clientType : string;
   recentlyViewdIds: Set<number> = new Set();
@@ -36,7 +36,7 @@ export class LoginService {
     this.saveRecentlyViewed();
   }
   getRecentlyViewed() {
-    return JSON.parse(localStorage.getItem("last-viewed"));
+    return JSON.parse(localStorage.getItem("last-viewed")) || [];
   }
   public login(email : string, password : string,clientType :  ClientType){
     const path = this.path +"/"+ email +"/"+password+"/"+clientType;
@@ -47,7 +47,13 @@ export class LoginService {
         this.authenticated = 2;
         this.clientType = clientType.toString();
         sessionStorage.setItem("token",success)
-        this.router.navigateByUrl("/home");
+        if(this.clientType == "Company"){
+          this.router.navigateByUrl("/company-profile")
+          
+        }else{
+          this.router.navigateByUrl("/home");
+
+        }
         
       },
       error=>{

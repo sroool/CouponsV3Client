@@ -14,6 +14,7 @@ export class AddcompanyComponent implements OnInit {
   visibility = "visibility";
   type = "password";
   title = "Add Company";
+  disableDeleteButton = false;
   newCompany : FormGroup;
   constructor(private fb : FormBuilder, private adminService : AdminService, 
               private snackBar : MatSnackBar, private dialog : MatDialogRef<AddcompanyComponent>,
@@ -43,29 +44,28 @@ export class AddcompanyComponent implements OnInit {
   }
   deleteCompany(){
     this.newCompany.disable();
+    this.disableDeleteButton=true;
     this.adminService.deleteCompany(this.id.value).subscribe(
       success => {
-        console.log(success)
         const snackRef = this.snackBar.open("Company Deleted Successfuly!","dismiss");
         snackRef.onAction().subscribe( ()=>{
           this.close();
         })
       },
       error => {
-        console.log(error);
         let errorMessage : string = error.error;
         if(error.status == 0){
           errorMessage = "oops, try again later", "dismiss";
         }
         const snackRef = this.snackBar.open(errorMessage, "dismiss");
         this.newCompany.enable()
+        this.disableDeleteButton = false;
       }
     )
   }
   addCompany(){
     this.newCompany.disable();
     const company : Company = new Company(0,this.name.value,this.email.value,this.password.value) ;
-    console.log(company);
     this.adminService.addCompany(company).subscribe(
       success =>{
         const snackRef = this.snackBar.open("New Company Succesfully added!","dismiss");
@@ -73,7 +73,6 @@ export class AddcompanyComponent implements OnInit {
           this.close();
         })
       }, error => {
-        console.log(error)
         let errorMessage : string = error.error;
         if(error.status == 0){
           errorMessage = "oops, try again later", "dismiss";
@@ -88,9 +87,8 @@ export class AddcompanyComponent implements OnInit {
   }
   updateCompany(){
     this.newCompany.disable();
-    const company : Company = new Company(this.id.value,this.name.value,this.email.value,this.password.value) ;
-    console.log(company);
-
+    this.disableDeleteButton = true;
+    const company : Company = new Company(this.id.value,this.name.value,this.email.value,this.password.value,this.company._coupons) ;
     this.adminService.updateCompany(company).subscribe(
       success =>{
         const snackRef = this.snackBar.open("Company Succesfully Updated!","dismiss");
@@ -106,6 +104,7 @@ export class AddcompanyComponent implements OnInit {
         snackRef.onAction().subscribe( ()=>{
 
           this.newCompany.enable()
+          this.disableDeleteButton=false;
         })
 
       }

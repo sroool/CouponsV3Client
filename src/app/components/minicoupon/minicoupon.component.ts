@@ -22,7 +22,6 @@ export class MinicouponComponent implements OnInit {
   constructor(private customerService : CustomerService, private router : Router) { }
 
   ngOnInit(): void {
-    console.log("ive been called ");
     if(this.coupon){
       this.imgPlaceHolder = this.coupon._image;
     }

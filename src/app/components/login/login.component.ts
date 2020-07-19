@@ -29,6 +29,7 @@ export class LoginComponent implements OnInit {
 
   }
   public login(){
+  
     this.loginService.login(this.email.value, this.password.value, this.clientType.value);
   }
   public showPassword(){

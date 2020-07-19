@@ -28,7 +28,6 @@ export class AllcompaniesComponent implements OnInit {
       success => {
         const companies : Company[] = Company.getCompanies(success);
         this.companies = companies;
-        console.log(this.companies);
         this.dataSource = new MatTableDataSource(this.companies);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;

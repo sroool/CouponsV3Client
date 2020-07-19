@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Component, OnInit } from '@angular/core';
 import { Coupon } from 'src/app/models/coupon';
 import { CustomerService } from 'src/app/services/customer.service';
@@ -31,7 +32,7 @@ export class CustomerhomeComponent implements OnInit {
   furnitureCoupons : Coupon[]
   spaCoupons : Coupon[];
 
-  constructor(private customerService: CustomerService) { }
+  constructor(private customerService: CustomerService, private snackBar : MatSnackBar) { }
 
   display(coupon :Coupon) : string{
     return coupon && coupon._title ? coupon._title : '';
@@ -44,8 +45,9 @@ export class CustomerhomeComponent implements OnInit {
  
   searchListener(){
     if(this.autoComplete.value.length >=3)
-      this.optionsB = this.coupons.filter( coupon => this.autoComplete.value.length > 0 && coupon._title.toLowerCase().includes(this.autoComplete.value)).slice(0,6);
-    if(this.autoComplete.value.length == 0)
+      this.optionsB = this.coupons.filter( coupon =>  coupon._title.toLowerCase().includes(this.autoComplete.value)
+                                          && (this.searchOption != "All" ? coupon._category.toString() == this.searchOption : true)).slice(0,6);
+    if(this.autoComplete.value.length < 3)
       this.optionsB = null;
 
   }
@@ -72,7 +74,11 @@ export class CustomerhomeComponent implements OnInit {
         this.limitedTimeCoupons = this.coupons.filter(this.limitedTime).sort(this.sortByLimitedTime).slice(0,3);
         
       }, error => {
-        console.log(error);
+        let errorMessage: string = error.error;
+        if (error.status == 0 || error.status == 500) {
+          errorMessage = "Oops, try again later";
+        }
+        const snackRef = this.snackBar.open(errorMessage, "dismiss");
       }
     );
   }

@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CompanyService } from 'src/app/services/company.service';
 import { Company } from 'src/app/models/company';
@@ -17,15 +18,15 @@ import { Customer } from 'src/app/models/customer';
 export class CompanyprofileComponent implements OnInit {
   company: Company;
   coupons: Coupon[];
-  clients : Customer[];
+  clients: Customer[];
   search: string;
   searchOption = "Regular Search";
   dataSource;
-  displayedColumns: string[] = ["image", "title", "category","endDate", "amount","price","bought", "actions"]
+  displayedColumns: string[] = ["image", "title", "category", "endDate", "originalAmount", "bought", "price", "actions"]
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  constructor(private companyService: CompanyService, private dialog : MatDialog,
-              ) { }
+  constructor(private companyService: CompanyService, private dialog: MatDialog, private snackBar: MatSnackBar
+  ) { }
 
   ngOnInit(): void {
     this.companyService.getCompanyDetails().subscribe(
@@ -34,14 +35,14 @@ export class CompanyprofileComponent implements OnInit {
         this.coupons = Coupon.getCoupons(this.company._coupons);
         this.dataSource = new MatTableDataSource(this.coupons);
         this.dataSource.filterPredicate = (data, filter) => {
-          if(this.searchOption == "By Category"){
+          if (this.searchOption == "By Category") {
             return data._category.toString().toLowerCase().indexOf(filter) != -1;
-          }else if(this.searchOption == "By Max Price"){
+          } else if (this.searchOption == "By Max Price") {
             return data._price <= +filter;
-          }else{
-            return this.displayedColumns.some( element => {
-              data[element].toString().toLowerCase().indexOf(filter) != -1;
-            })
+          } else {
+            return this.displayedColumns.some(element => {
+              return (element != "image" && element != "actions") && (data[element].toString().toLowerCase().indexOf(filter) != -1);
+            });
           }
         }
         this.dataSource.sort = this.sort;
@@ -49,36 +50,45 @@ export class CompanyprofileComponent implements OnInit {
         this.companyService.getAllClients().subscribe(
           success => {
             this.clients = Customer.getCustomers(success);
-            
+
           },
-          error =>{
-            console.log(error);
+          error => {
+            let errorMessage: string = error.error;
+            if (error.status == 0 || error.status == 500) {
+              errorMessage = "Oops, try again later";
+            }
+            const snackRef = this.snackBar.open(errorMessage, "dismiss");
+
           }
         )
       },
       error => {
-        console.log(error);
+        let errorMessage: string = error.error;
+        if (error.status == 0 || error.status == 500) {
+          errorMessage = "Oops, try again later";
+        }
+        const snackRef = this.snackBar.open(errorMessage, "dismiss");
       }
     )
   }
-  createCoupon(){
-    let config : MatDialogConfig = new MatDialogConfig();
+  createCoupon() {
+    let config: MatDialogConfig = new MatDialogConfig();
     config.autoFocus = true;
     config.disableClose = true;
     config.width = "60%";
     const dialogRef = this.dialog.open(AddcouponComponent, config);
-    dialogRef.afterClosed().subscribe( ()=>{
+    dialogRef.afterClosed().subscribe(() => {
       this.ngOnInit();
     });
   }
-  editCoupon(coupon){
-    let config : MatDialogConfig = new MatDialogConfig();
+  editCoupon(coupon) {
+    let config: MatDialogConfig = new MatDialogConfig();
     config.autoFocus = true;
     config.disableClose = true;
     config.width = "60%";
     config.data = coupon;
     const dialogRef = this.dialog.open(AddcouponComponent, config);
-    dialogRef.afterClosed().subscribe( ()=>{
+    dialogRef.afterClosed().subscribe(() => {
       this.ngOnInit();
     });
   }
@@ -89,8 +99,8 @@ export class CompanyprofileComponent implements OnInit {
     this.search = '';
     this.filterSearch();
   }
-  getAmountPurchases(coupon:Coupon){
-   
-    return this.clients?.filter( client => client._coupons.some( c=>c._id==coupon._id)).length;
+  getAmountPurchases(coupon: Coupon) {
+
+    return this.clients?.filter(client => client._coupons.some(c => c._id == coupon._id)).length;
   }
 }
