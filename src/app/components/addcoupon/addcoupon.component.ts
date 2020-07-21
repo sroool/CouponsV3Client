@@ -58,7 +58,7 @@ export class AddcouponComponent implements OnInit {
       endDate: ["", [Validators.required, this.validateEndDate]],
       amount: ["", [Validators.required, Validators.min(1)]],
       price: ["", [Validators.required, Validators.min(1)]],
-      image: ["", [Validators.required  ]]
+      image: ["", [Validators.required]]
     });
 
     if (this.coupon) {
@@ -85,7 +85,7 @@ export class AddcouponComponent implements OnInit {
     if (!this.couponImageFile)
       return;
 
-    this.couponImageType= this.couponImageFile.type.split("/")[1];
+    this.couponImageType = this.couponImageFile.type.split("/")[1];
     if (!this.acceptedTypes.includes(this.couponImageType)) {
       this.couponImageError.errors = true;
       this.couponImageError.couponImageTypeError = true;
@@ -95,8 +95,6 @@ export class AddcouponComponent implements OnInit {
     fileReader.onload = () => {
       this.couponImage = new Image();
       this.couponImage.onload = () => {
-
-        console.log(this.couponImage.width);
         if (this.couponImage.width > 360 || this.couponImage.height > 360) {
           this.couponImageError.errors = true;
           this.couponImageError.couponImageSizeError = true;
@@ -147,10 +145,10 @@ export class AddcouponComponent implements OnInit {
   addCoupon() {
 
     this.newCoupon.disable();
-    this.couponImageName = this.title.value.trim().replace(/ /g,"_") + "." + this.couponImageType;
+    this.couponImageName = this.title.value.trim().replace(/ /g, "_") + "." + this.couponImageType;
     this.image.setValue("assets/images/" + this.couponImageName);
     const uploadImageData = new FormData();
-  
+
     ;
     uploadImageData.append('imageFile', this.couponImageFile, this.couponImageName);
     const coupon: Coupon = new Coupon(0, this.companyId, this.category.value, this.title.value.trim(),
