@@ -19,6 +19,14 @@ export class CompanyService {
     const path = this.path + "/add-coupon/" + this.loginService.token;
     return this.client.post<Coupon>(path, coupon);
   }
+  public addCouponImage(data) {
+    const path = this.path + "/add-coupon-image/" + this.loginService.token;
+    this.client.post(path, data, {observe: 'response',responseType:'text'}).subscribe(
+      success =>{
+        console.log(success);
+      }
+    )
+  }
   public updateCoupon(coupon : Coupon){
     const path = this.path + "/update-coupon/" + this.loginService.token;
     return this.client.post<Coupon>(path, coupon);

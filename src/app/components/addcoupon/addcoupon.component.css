@@ -14,4 +14,16 @@ button{
 }
 .fill-toolbar{
     flex : 1 1 auto;
+    
+}
+.image-input{
+    display: none;
+}
+.image-error{
+    color: #f44336;
+    font-weight: 400;
+    line-height: 1.125;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    letter-spacing: normal;
+    display: block;
 }

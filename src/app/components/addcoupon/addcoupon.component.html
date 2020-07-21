@@ -9,6 +9,15 @@
         </mat-toolbar>
         <form [formGroup]="newCoupon">
 
+            <div class="coupon-image">
+                <img [src]="displayImageSrc" [alt]="" width="90" height="90"/><br>
+                <input type="file" class="image-input" #image  accept=".jpg, .jpeg, .png, .webp"  (change)="validateImage($event)" />
+                <input class="image-input" formControlName="image" />
+                <button type="button" mat-raised-button (click)="image.click()">Upload Image</button>
+                <span class="image-error" *ngIf="couponImageError.couponImageRequiredError">an image is required</span>
+                <span class="image-error" *ngIf="couponImageError.couponImageSizeError">image size must be under 300x300</span>
+                <span class="image-error" *ngIf="couponImageError.couponImageTypeError">supported types include : .jpg, .jpeg, .png, .webp</span>
+            </div>
             <mat-form-field>
                 <mat-label>Title</mat-label>
                 <input matInput placeholder="Title" formControlName="title" />
@@ -54,13 +63,14 @@
                 <mat-error>Price is required</mat-error>
                 <mat-error *ngIf="startDate.errors?.min">Price must be positive</mat-error>
             </mat-form-field>
-            <mat-form-field>
+            <!-- <mat-form-field>
                 <mat-label>Image</mat-label>
-                <input matInput type="text" formControlName="image" />
+                <input matInput type="text" formControlName="image" /> 
                 <mat-error>Image is required</mat-error>
-            </mat-form-field>
+            </mat-form-field> -->
             <div class="actions">
                 <button mat-raised-button [disabled]="!newCoupon.valid" (click)="saveCoupon()">{{header}}</button>
+
                 <button mat-raised-button [disabled]="disableDeleteButton" (click)="deleteCoupon()" *ngIf="coupon">Delete Coupon</button>
             </div>
         </form>

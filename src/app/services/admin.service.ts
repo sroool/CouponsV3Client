@@ -9,6 +9,7 @@ import { Customer } from '../models/customer';
   providedIn: 'root'
 })
 export class AdminService {
+  // "http://localhost:8080"
   path = "/admin"
   constructor(private client : HttpClient, private loginService : LoginService) { }
   public addCompany( company : Company){
