@@ -1,6 +1,6 @@
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CustomerService } from 'src/app/services/customer.service';
 import { Category } from 'src/app/models/category.enum';
 import { Coupon } from 'src/app/models/coupon';
@@ -15,9 +15,12 @@ export class CouponbycategoryComponent implements OnInit {
   category : Category;
   categoryName : string;
   coupons : Coupon[] = [];
-  constructor(private activeRoute : ActivatedRoute, private customerService : CustomerService, private snackBar : MatSnackBar) { }
+  constructor(private activeRoute : ActivatedRoute, private customerService : CustomerService, private snackBar : MatSnackBar, private router : Router) { }
   toCategory(text) : Category{
     return Category.Food;
+  }
+  showCoupon(coupon){
+    this.router.navigateByUrl("/coupon/"+coupon._id);
   }
   ngOnInit(): void {
     this.category = (<any>Category)[this.activeRoute.snapshot.params["category"]];

@@ -4,9 +4,10 @@
     </div>
     <div class="search" *ngIf="search && coupon">
 
-        <a [routerLink]="['/loading/',coupon._id]">
+        <button mat-button (click)="selectCoupon()">
+
             <img [src]="imgPlaceHolder" alt="" />
-        </a>
+        </button>
 
         {{coupon._title}}
         <p>
@@ -17,10 +18,10 @@
     </div>
     <div *ngIf="!search && coupon">
 
-        <a [routerLink]="['/loading/',coupon._id]">
-            <img [src]="imgPlaceHolder" alt="" />
+        
+        <button mat-button (click)="selectCoupon()"><img [src]="imgPlaceHolder" alt="" /></button>
 
-        </a>
+        
         <div class="coupon-info">
             {{coupon._title}}
             <span class="price">

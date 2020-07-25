@@ -21,7 +21,7 @@
             </mat-form-field>
         </div>
         <div class="search-coupons offers mat-elevation-z8" *ngIf="autoComplete.value">
-            <app-minicoupon *ngFor="let coupon of optionsB" [coupon]="coupon" [search]="true">
+            <app-minicoupon *ngFor="let coupon of optionsB" [coupon]="coupon" [search]="true"  (selectedCoupon)="showCoupon($event)">
             </app-minicoupon>
         </div>
     </div>
@@ -34,7 +34,7 @@
             <h2>Limited Time Coupons - DONT MISS OUT</h2>
             <div class="limited-time-coupons offers">
 
-                <app-minicoupon *ngFor="let coupon of limitedTimeCoupons" [coupon]="coupon"></app-minicoupon>
+                <app-minicoupon *ngFor="let coupon of limitedTimeCoupons" [coupon]="coupon" (selectedCoupon)="showCoupon($event)"></app-minicoupon>
             </div>
         </div>
 
@@ -42,7 +42,7 @@
             <h2>Customers Top Picks</h2>
             <div class="top-picks-coupons offers">
                 <app-minicoupon *ngFor="let coupon of topPicksCoupons" [coupon]="coupon"
-                    [boughtBy]="coupon._bought"></app-minicoupon>
+                    [boughtBy]="coupon._bought" (selectedCoupon)="showCoupon($event)"></app-minicoupon>
             </div>
         </div>
         
@@ -50,7 +50,7 @@
             <h2>Electricity</h2>
             <div class="elec-coupons offers">
                 <app-minicoupon *ngFor="let coupon of electricityCoupons" [coupon]="coupon"
-                    [boughtBy]="coupon._bought"></app-minicoupon>
+                    [boughtBy]="coupon._bought" (selectedCoupon)="showCoupon($event)"></app-minicoupon>
             </div>
         </div>
     
@@ -58,21 +58,21 @@
             <h2>Fashion</h2>
             <div class="fashion-coupons offers">
                 <app-minicoupon *ngFor="let coupon of fashionCoupons" [coupon]="coupon"
-                    [boughtBy]="coupon._bought"></app-minicoupon>
+                    [boughtBy]="coupon._bought" (selectedCoupon)="showCoupon($event)"></app-minicoupon>
             </div>
         </div>
         <div class="food mat-elevation-z8">
             <h2>Food</h2>
             <div class="food-coupons offers">
                 <app-minicoupon *ngFor="let coupon of foodCoupons" [coupon]="coupon"
-                    [boughtBy]="coupon._bought"></app-minicoupon>
+                    [boughtBy]="coupon._bought" (selectedCoupon)="showCoupon($event)"></app-minicoupon>
             </div>
         </div>
         <div class="pets mat-elevation-z8">
             <h2>Pets</h2>
             <div class="pets-coupons offers">
                 <app-minicoupon *ngFor="let coupon of petsCoupons" [coupon]="coupon"
-                    [boughtBy]="coupon._bought"></app-minicoupon>
+                    [boughtBy]="coupon._bought" (selectedCoupon)="showCoupon($event)"></app-minicoupon>
             </div>
         </div>
 
@@ -81,14 +81,14 @@
             <h2>Furniture</h2>
             <div class="furniture-coupons offers">
                 <app-minicoupon *ngFor="let coupon of furnitureCoupons" [coupon]="coupon"
-                    [boughtBy]="coupon._bought"></app-minicoupon>
+                    [boughtBy]="coupon._bought" (selectedCoupon)="showCoupon($event)"></app-minicoupon>
             </div>
         </div>
         <div class="spa mat-elevation-z8">
             <h2>Spa</h2>
             <div class="spa-coupons offers">
                 <app-minicoupon *ngFor="let coupon of spaCoupons" [coupon]="coupon"
-                    [boughtBy]="coupon._bought"></app-minicoupon>
+                    [boughtBy]="coupon._bought" (selectedCoupon)="showCoupon($event)"></app-minicoupon>
             </div>
         </div> <br>
       

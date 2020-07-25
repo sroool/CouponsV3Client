@@ -24,7 +24,6 @@ export class AddcouponComponent implements OnInit {
   displayImageSrc;
   couponImageName;
   couponImageError = {
-    errors: false,
     couponImageSizeError: false,
     couponImageRequiredError: false,
     couponImageTypeError: false,
@@ -66,28 +65,30 @@ export class AddcouponComponent implements OnInit {
         title: this.coupon._title, category: this.coupon._category,
         description: this.coupon._description, startDate: this.coupon._startDate,
         endDate: this.coupon._endDate, amount: this.coupon._originalAmount, price: this.coupon._price,
-        image: this.coupon._image
+        image: this.coupon._imageUrlData
       });
-      this.displayImageSrc = this.coupon._image;
+      
+      this.displayImageSrc = this.coupon._imageUrlData;
       this.header = "Update Coupon";
       for (let control in this.newCoupon.controls) {
         this.newCoupon.controls[control].markAsTouched();
       }
     }
   }
-
+  clearImageErrors(){
+    for(let error of Object.keys(this.couponImageError)){
+      this.couponImageError[error] = false;
+    }
+  }
   validateImage(event) {
+    this.clearImageErrors();
     this.couponImageFile = event.target.files[0];
-    this.couponImageError.errors = false;
-    this.couponImageError.couponImageTypeError = false;
-    this.couponImageError.couponImageRequiredError = false;
-    this.couponImageError.couponImageSizeError = false;
-    if (!this.couponImageFile)
+    if (!this.couponImageFile){
+      this.couponImageError.couponImageRequiredError = true;
       return;
-
+    }
     this.couponImageType = this.couponImageFile.type.split("/")[1];
     if (!this.acceptedTypes.includes(this.couponImageType)) {
-      this.couponImageError.errors = true;
       this.couponImageError.couponImageTypeError = true;
       return;
     }
@@ -96,20 +97,17 @@ export class AddcouponComponent implements OnInit {
       this.couponImage = new Image();
       this.couponImage.onload = () => {
         if (this.couponImage.width > 360 || this.couponImage.height > 360) {
-          this.couponImageError.errors = true;
           this.couponImageError.couponImageSizeError = true;
           this.displayImageSrc = this.defaultImageSrc;
           this.image.setValue("");
         } else {
           this.displayImageSrc = this.couponImage.src;
-          this.image.setValue("assets/images/" + this.couponImageFile.name);
-          this.couponImageError.errors = false;
-          this.couponImageError.couponImageTypeError = false;
-          this.couponImageError.couponImageRequiredError = false;
-          this.couponImageError.couponImageSizeError = false;
+          this.image.setValue(this.couponImage.src);
+          this.clearImageErrors();
         }
       }
-      this.couponImage.src = fileReader.result + "";
+      let src : any = fileReader.result
+      this.couponImage.src  =   src;
     }
     fileReader.readAsDataURL(this.couponImageFile);
 
@@ -143,20 +141,12 @@ export class AddcouponComponent implements OnInit {
     }
   }
   addCoupon() {
-
     this.newCoupon.disable();
-    this.couponImageName = this.title.value.trim().replace(/ /g, "_") + "." + this.couponImageType;
-    this.image.setValue("assets/images/" + this.couponImageName);
-    const uploadImageData = new FormData();
-
-    ;
-    uploadImageData.append('imageFile', this.couponImageFile, this.couponImageName);
     const coupon: Coupon = new Coupon(0, this.companyId, this.category.value, this.title.value.trim(),
       this.description.value.trim(), this.startDate.value, this.endDate.value,
       this.amount.value, this.amount.value, this.price.value, this.image.value);
     this.companyService.addCoupon(coupon).subscribe(
       success => {
-        this.companyService.addCouponImage(uploadImageData);
         const snackRef = this.snackBar.open("New Coupon added successfully", "dismiss");
         snackRef.onAction().subscribe(() => {
           this.close();

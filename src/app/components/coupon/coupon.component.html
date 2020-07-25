@@ -1,11 +1,12 @@
 <div class="container mat-elevation-z8">
+    {{ activeRoute.snapshot.params['id'] }}
     <div class="loading" *ngIf="!coupon">
         <mat-spinner color="accent" diameter="200"></mat-spinner>
     </div>
     <div class="coupon-page" *ngIf="coupon">
         <div class="coupon-card">
 
-            <img [src]="coupon?._image" [alt]="coupon?._title" />
+            <img [src]="coupon?._imageUrlData" [alt]="coupon?._title" />
             <div class="info">
                 <div class="info-content">
 
@@ -31,7 +32,7 @@
             <div class="additional-coupons">
 
                 <app-minicoupon *ngFor="let coupon of otherCustomersCoupons" [boughtBy]="coupon._bought"
-                    [coupon]="coupon"></app-minicoupon>
+                    [coupon]="coupon" (selectedCoupon)="showCoupon($event)"></app-minicoupon>
             </div>
         </div>
         <hr>
@@ -40,7 +41,7 @@
             <div class="additional-coupons">
 
                 <app-minicoupon *ngFor="let coupon of recentlyViewedCoupons" [boughtBy]="coupon._bought"
-                    [coupon]="coupon"></app-minicoupon>
+                    [coupon]="coupon" (selectedCoupon)="showCoupon($event)"></app-minicoupon>
             </div>
         </div>
     </div>

@@ -13,7 +13,7 @@ export class LoadingComponent implements OnInit {
 
   ngOnInit(): void {
     this.couponId = this.activeRoute.snapshot.params["id"];
-    this.router.navigateByUrl("/coupon/"+this.couponId); 
+    this.router.navigateByUrl("/coupon/"+this.couponId, {replaceUrl: true}); 
   }
 
 }

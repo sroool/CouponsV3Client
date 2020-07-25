@@ -9,7 +9,7 @@ import { Customer } from '../models/customer';
   providedIn: 'root'
 })
 export class CompanyService {
-  path = "/company"
+  path = "http://localhost:8080/company"
   constructor(private client : HttpClient, private loginService : LoginService) { }
   public getCompanyDetails() {
     const path : string = this.path + "/company-details/" + this.loginService.token;
@@ -24,8 +24,15 @@ export class CompanyService {
     this.client.post(path, data, {observe: 'response',responseType:'text'}).subscribe(
       success =>{
         console.log(success);
+      },
+      error =>{
+        console.log(error);
       }
     )
+  }
+  public getCouponImage(name){
+    const path = this.path + "/get-coupon-image/" + this.loginService.token + "/" + name;
+    return this.client.get(path);
   }
   public updateCoupon(coupon : Coupon){
     const path = this.path + "/update-coupon/" + this.loginService.token;

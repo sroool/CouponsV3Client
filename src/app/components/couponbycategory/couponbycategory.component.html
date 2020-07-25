@@ -6,6 +6,6 @@
     </mat-toolbar>
     <div class="category-coupons">
 
-        <app-minicoupon *ngFor="let coupon of coupons" [coupon]="coupon" [boughtBy]="coupon._bought"></app-minicoupon>
+        <app-minicoupon *ngFor="let coupon of coupons" [coupon]="coupon" [boughtBy]="coupon._bought"  (selectedCoupon)="showCoupon($event)"></app-minicoupon>
     </div>
 </div>

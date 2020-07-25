@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Component, OnInit } from '@angular/core';
 import { Coupon } from 'src/app/models/coupon';
@@ -32,7 +33,7 @@ export class CustomerhomeComponent implements OnInit {
   furnitureCoupons : Coupon[]
   spaCoupons : Coupon[];
 
-  constructor(private customerService: CustomerService, private snackBar : MatSnackBar) { }
+  constructor(private customerService: CustomerService, private snackBar : MatSnackBar, private router : Router) { }
 
   display(coupon :Coupon) : string{
     return coupon && coupon._title ? coupon._title : '';
@@ -74,6 +75,7 @@ export class CustomerhomeComponent implements OnInit {
         this.limitedTimeCoupons = this.coupons.filter(this.limitedTime).sort(this.sortByLimitedTime).slice(0,3);
         
       }, error => {
+        console.log(error);
         let errorMessage: string = error.error;
         if (error.status == 0 || error.status == 500) {
           errorMessage = "Oops, try again later";
@@ -90,6 +92,9 @@ export class CustomerhomeComponent implements OnInit {
       return true;
     }
     return false;
+  }
+  showCoupon(coupon){
+    this.router.navigateByUrl("/coupon/"+coupon._id);
   }
 
 }

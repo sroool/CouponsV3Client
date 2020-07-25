@@ -10,7 +10,7 @@ import { Customer } from '../models/customer';
   providedIn: 'root'
 })
 export class LoginService {
-  path = "/login";
+  path = "http://localhost:8080/login";
   authenticated = 0;
   clientType : string;
   recentlyViewdIds: Set<number> = new Set();

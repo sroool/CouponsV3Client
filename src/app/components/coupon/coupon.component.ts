@@ -1,11 +1,12 @@
 import { LoginService } from 'src/app/services/login.service';
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Coupon } from 'src/app/models/coupon';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomerService } from 'src/app/services/customer.service';
 import { Customer } from 'src/app/models/customer';
+import {Location} from '@angular/common'
 
 @Component({
   selector: 'app-coupon',
@@ -23,11 +24,24 @@ export class CouponComponent implements OnInit {
   purchaseAmount: number;
 
   countDown;
-  constructor(private activeRoute: ActivatedRoute, private customerService: CustomerService,
-    private dialog: MatDialog, private snackBar: MatSnackBar, private router: Router, private loginService: LoginService) { }
+
+  constructor(public activeRoute: ActivatedRoute, private customerService: CustomerService,
+    private dialog: MatDialog, private snackBar: MatSnackBar, private router: Router, private loginService: LoginService,
+    private location : Location
+    ) { 
+      
+    }
 
   ngOnInit(): void {
-    this.couponId = this.activeRoute.snapshot.params['id'];
+
+    
+    this.activeRoute.paramMap.subscribe( params =>{
+      this.couponId = +params.get('id');
+      this.getCoupon();
+    })
+    
+  }
+  getCoupon(){
     this.customerService.getCouponById(this.couponId).subscribe(
       success => {
         this.loginService.updateRecentlyViewed(this.couponId);
@@ -38,9 +52,12 @@ export class CouponComponent implements OnInit {
         this.customerService.getCustomersByCoupon(this.couponId).subscribe(
           success => {
             this.otherCustomers = Customer.getCustomers(success);
-            this.otherCustomersCoupons = this.otherCustomers.map(customer => customer._coupons).reduce((acc, curr) => acc.concat(curr));
-            this.otherCustomersCoupons = this.filterDuplicates(this.otherCustomersCoupons);
-            this.otherCustomersCoupons = this.otherCustomersCoupons.filter(coupon => this.sharedCoupon(this.otherCustomers, coupon)).sort(this.sortByBought).slice(0, 5);
+            if(this.otherCustomers.length > 0){
+
+              this.otherCustomersCoupons = this.otherCustomers.map(customer => customer._coupons).reduce((acc, curr) => acc.concat(curr));
+              this.otherCustomersCoupons = this.filterDuplicates(this.otherCustomersCoupons);
+              this.otherCustomersCoupons = this.otherCustomersCoupons.filter(coupon => this.sharedCoupon(this.otherCustomers, coupon)).sort(this.sortByBought).slice(0, 5);
+            }
           },
           error => {
             let errorMessage: string = error.error;
@@ -64,6 +81,12 @@ export class CouponComponent implements OnInit {
       }
     )
     this.showRecentlyViewed();
+  }
+  showCoupon(coupon){
+    this.couponId = coupon._id;
+  
+    this.router.navigateByUrl("/coupon/"+coupon._id);
+   
   }
   showRecentlyViewed() {
     let ids: number[] = this.loginService.getRecentlyViewed().map(id => +id);
