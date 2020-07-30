@@ -20,7 +20,6 @@ export class CouponComponent implements OnInit {
   disableBuyButton = false;
   otherCustomers: Customer[];
   otherCustomersCoupons: Coupon[];
-  recentlyViewedCoupons: Coupon[] = [];
   purchaseAmount: number;
 
   countDown;
@@ -44,7 +43,6 @@ export class CouponComponent implements OnInit {
   getCoupon(){
     this.customerService.getCouponById(this.couponId).subscribe(
       success => {
-        this.loginService.updateRecentlyViewed(this.couponId);
         this.coupon = Coupon.getCoupon(success);
         setInterval(() => {
           this.countDown = this.remainingTime();
@@ -56,7 +54,7 @@ export class CouponComponent implements OnInit {
 
               this.otherCustomersCoupons = this.otherCustomers.map(customer => customer._coupons).reduce((acc, curr) => acc.concat(curr));
               this.otherCustomersCoupons = this.filterDuplicates(this.otherCustomersCoupons);
-              this.otherCustomersCoupons = this.otherCustomersCoupons.filter(coupon => this.sharedCoupon(this.otherCustomers, coupon)).sort(this.sortByBought).slice(0, 5);
+              this.otherCustomersCoupons = this.otherCustomersCoupons.filter(coupon => coupon._id!=this.couponId && this.sharedCoupon(this.otherCustomers, coupon)).sort(this.sortByBought).slice(0, 5);
             }
           },
           error => {
@@ -80,7 +78,7 @@ export class CouponComponent implements OnInit {
         const snackRef = this.snackBar.open(errorMessage, "dismiss");
       }
     )
-    this.showRecentlyViewed();
+ 
   }
   showCoupon(coupon){
     this.couponId = coupon._id;
@@ -88,22 +86,7 @@ export class CouponComponent implements OnInit {
     this.router.navigateByUrl("/coupon/"+coupon._id);
    
   }
-  showRecentlyViewed() {
-    let ids: number[] = this.loginService.getRecentlyViewed().map(id => +id);
-    ids.forEach(id => this.customerService.getCouponById(id).subscribe(
-      success => {
-        this.recentlyViewedCoupons.push(Coupon.getCoupon(success));
-      }, error => {
-        let errorMessage: string = error.error;
-        if (error.status == 0 || error.status == 500) {
-          errorMessage = "Oops, try again later";
-        }
-        const snackRef = this.snackBar.open(errorMessage, "dismiss");
-      }
-    ))
-
-
-  }
+  
   purchaseCoupon() {
     this.disableBuyButton = true;
     this.customerService.purchaseCoupon(this.coupon).subscribe(

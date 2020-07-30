@@ -83,7 +83,8 @@ export class Coupon {
         this.price = price;
     }
     get _imageUrlData() : string{
-        return this.imageUrlData;
+        
+        return window.atob(this.imageUrlData);
     }
     set _imageUrlData(image :string){
         this.imageUrlData = image;

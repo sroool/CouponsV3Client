@@ -1,5 +1,4 @@
 <div class="container mat-elevation-z8">
-    {{ activeRoute.snapshot.params['id'] }}
     <div class="loading" *ngIf="!coupon">
         <mat-spinner color="accent" diameter="200"></mat-spinner>
     </div>
@@ -26,8 +25,9 @@
             </div>
       
         </div>
-        <hr>
-        <div class="additional">
+       
+        <div class="additional" *ngIf="otherCustomersCoupons">
+            <hr>
             <p>People who bought {{coupon?._title}} Also enjoyed these:</p>
             <div class="additional-coupons">
 
@@ -35,15 +35,8 @@
                     [coupon]="coupon" (selectedCoupon)="showCoupon($event)"></app-minicoupon>
             </div>
         </div>
-        <hr>
-        <div class="additional" *ngIf="recentlyViewedCoupons">
-            <p>You were recently interested in these coupons:</p>
-            <div class="additional-coupons">
 
-                <app-minicoupon *ngFor="let coupon of recentlyViewedCoupons" [boughtBy]="coupon._bought"
-                    [coupon]="coupon" (selectedCoupon)="showCoupon($event)"></app-minicoupon>
-            </div>
-        </div>
+        
     </div>
 
 </div>

@@ -1,3 +1,4 @@
+import { LoginrequiredGuard } from './services/loginrequired.guard';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
@@ -17,7 +18,7 @@ import { CategoryGuard } from './services/category.guard';
 const routes: Routes = [
   {path: "", redirectTo:"home",pathMatch:"full",canActivate : [LoginguardService]},
   {path: "home", component: HomeComponent, canActivate : [LoginguardService]},
-  {path: "login", component: LoginComponent},
+  {path: "login", component: LoginComponent, canActivate: [LoginrequiredGuard]},
   {path: "all-companies", component:AllcompaniesComponent, canActivate: [LoginguardService]},
   {path: "all-customers", component:AllcustomersComponent, canActivate: [LoginguardService]},
   {path: "customer-profile", component:CustomerprofileComponent, canActivate: [LoginguardService]},

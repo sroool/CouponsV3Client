@@ -102,7 +102,7 @@ export class AddcouponComponent implements OnInit {
           this.image.setValue("");
         } else {
           this.displayImageSrc = this.couponImage.src;
-          this.image.setValue(this.couponImage.src);
+          this.image.setValue(window.btoa(this.couponImage.src));
           this.clearImageErrors();
         }
       }

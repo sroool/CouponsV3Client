@@ -13,31 +13,16 @@ export class LoginService {
   path = "http://localhost:8080/login";
   authenticated = 0;
   clientType : string;
-  recentlyViewdIds: Set<number> = new Set();
   constructor(private client : HttpClient, private snackBar : MatSnackBar, private router : Router) {
     
     this.loggedin();
-    this.recentlyViewdIds = new Set(JSON.parse(localStorage.getItem("last-viewed")));
    }
   get token() : string{
     return sessionStorage.getItem("token") || "guest";
   }
-  saveRecentlyViewed(){
 
-    localStorage.setItem("last-viewed",JSON.stringify([...this.recentlyViewdIds]))
-  }
-  updateRecentlyViewed(id:number){
-    if(this.recentlyViewdIds.size >=5){
-      let temp = [...this.recentlyViewdIds];
-      temp.shift();
-      this.recentlyViewdIds = new Set( temp);
-    }
-    this.recentlyViewdIds.add(id);
-    this.saveRecentlyViewed();
-  }
-  getRecentlyViewed() {
-    return JSON.parse(localStorage.getItem("last-viewed")) || [];
-  }
+
+
   public login(email : string, password : string,clientType :  ClientType){
     const path = this.path +"/"+ email +"/"+password+"/"+clientType;
     

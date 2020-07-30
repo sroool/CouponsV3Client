@@ -18,16 +18,9 @@
                 <button mat-icon-button *ngIf="loginService.authenticated == 2" [matMenuTriggerFor]="myMenu" ><mat-icon>account_circle</mat-icon></button>
                 <mat-menu #myMenu="matMenu">
                     
-                    <ng-container *ngIf="loginService.clientType?.toString() == 'Administrator'">
-                        <button mat-menu-item (click)="createCompany()">New Company</button>
-                        <button mat-menu-item routerLink="all-companies">All Companies</button>
-                        <button mat-menu-item (click)="createCustomer()">New Customer</button>
-                        <button mat-menu-item routerLink="all-customers">All Customers</button>
-                    </ng-container>
+                   
                     
-                    <!-- <ng-container *ngIf="loginService.clientType?.toString() == 'Company'">
-                        <button mat-menu-item routerLink="company-profile">My Profile</button>
-                    </ng-container> -->
+  
                     <ng-container *ngIf="loginService.clientType?.toString() == 'Customer'">
                         <button mat-menu-item routerLink="customer-profile">My Profile</button>
                     </ng-container>

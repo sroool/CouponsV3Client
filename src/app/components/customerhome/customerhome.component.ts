@@ -35,9 +35,6 @@ export class CustomerhomeComponent implements OnInit {
 
   constructor(private customerService: CustomerService, private snackBar : MatSnackBar, private router : Router) { }
 
-  display(coupon :Coupon) : string{
-    return coupon && coupon._title ? coupon._title : '';
-  }
   clearSearch(){
     this.autoComplete.setValue('');
     this.optionsB = null;
@@ -45,9 +42,10 @@ export class CustomerhomeComponent implements OnInit {
   
  
   searchListener(){
-    if(this.autoComplete.value.length >=3)
+    if(this.autoComplete.value.length >=3){
       this.optionsB = this.coupons.filter( coupon =>  coupon._title.toLowerCase().includes(this.autoComplete.value)
                                           && (this.searchOption != "All" ? coupon._category.toString() == this.searchOption : true)).slice(0,6);
+    }
     if(this.autoComplete.value.length < 3)
       this.optionsB = null;
 
@@ -64,7 +62,7 @@ export class CustomerhomeComponent implements OnInit {
         this.coupons = Coupon.getCoupons(success).sort(this.sortByBought);
         
         this.topPicksCoupons = this.coupons.slice(0,5);
-        this.electricityCoupons = this.coupons.filter( coupon => coupon._category.toString() == "Electricity" ).sort( this.sortByBought ).slice(0,5);
+        this.electricityCoupons = this.coupons.filter( coupon => coupon._category.toString() == "Electricity" ).slice(0,5);
         this.foodCoupons = this.coupons.filter( coupon => coupon._category.toString() == "Food" ).slice(0,5);
         this.spaCoupons = this.coupons.filter( coupon => coupon._category.toString() == "Spa" ).slice(0,5);
         this.petsCoupons = this.coupons.filter( coupon => coupon._category.toString() == "Pets" ).slice(0,5);

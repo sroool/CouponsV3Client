@@ -7,7 +7,7 @@
             <mat-form-field class="search" color="primary">
                 <mat-label>Search coupon</mat-label>
                 <mat-spinner matPrefix *ngIf="autoComplete.value?.length > 0 && autoComplete.value?.length < 3" [diameter]="30" color="primary"></mat-spinner>
-                <input type="search" matInput (input)="searchListener()" [formControl]="autoComplete" />
+                <input type="search" matInput (input)="searchListener()" [formControl]="autoComplete" placeholder="Search a coupon"/>
                 <button mat-icon-button matSuffix *ngIf="autoComplete.value" (click)="clearSearch()">
                     <mat-icon>cancel</mat-icon>
                 </button>
