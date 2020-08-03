@@ -11,14 +11,13 @@ export class LoginrequiredGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      this.loginService.loggedin();
       const token = sessionStorage.getItem("token") || "guest";
       if(token == "guest" ){
-        
+        this.loginService.authenticated = 1;
         return true;
       }
       this.router.navigateByUrl("/home");
-      return true;
+      return false;
   }
   
 }

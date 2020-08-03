@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Customer } from 'src/app/models/customer';
 import { CustomerService } from 'src/app/services/customer.service';
@@ -21,7 +22,7 @@ export class CustomerprofileComponent implements OnInit {
   displayedColumns : string[] = ["image","title","endDate","price"]
   @ViewChild(MatPaginator) paginator : MatPaginator;
   @ViewChild(MatSort) sort : MatSort;
-  constructor(private customerService : CustomerService, private snackBar : MatSnackBar) { }
+  constructor(private router : Router, private customerService : CustomerService, private snackBar : MatSnackBar) { }
 
   ngOnInit(): void {
     this.customerService.getCustomerDetails().subscribe(
@@ -44,13 +45,17 @@ export class CustomerprofileComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
       },
       error =>{
-        if(error.status != 401){
+        if(error.status == 401){
+          this.router.navigateByUrl('/home')
+        }else{
           let errorMessage = error.error;
           if(error.status == 0 || error.status == 500){
             errorMessage = "Oops, something went wrong";
           }
           this.snackBar.open(errorMessage,null,{duration: 2000});
+
         }
+        
       }
     )
   }

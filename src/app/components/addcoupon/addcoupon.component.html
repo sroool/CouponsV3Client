@@ -8,7 +8,8 @@
             </button>
         </mat-toolbar>
         <form [formGroup]="newCoupon">
-
+           
+               
             <div class="coupon-image">
                 <img [src]="displayImageSrc" [alt]="" width="90" height="90"/><br>
                 <input type="file" class="image-input" #image  accept=".jpg, .jpeg, .png, .webp"  (change)="validateImage($event)" />

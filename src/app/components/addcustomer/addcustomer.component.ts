@@ -46,6 +46,10 @@ export class AddcustomerComponent implements OnInit {
     
   }
   saveCustomer(){
+    if(this.newCustomer.invalid){
+      this.snackBar.open("Please fill in the form correctly","dismiss",{duration:2000});
+      return;
+    }
     if(this.customer){
       this.updateCustomer();
     }else{
@@ -97,6 +101,10 @@ export class AddcustomerComponent implements OnInit {
     )
   }
   deleteCustomer(){
+    if(this.newCustomer.invalid){
+      this.snackBar.open("Please fill in the form correctly","dismiss",{duration:2000});
+      return;
+    }
     this.newCustomer.disable();
     this.disableDeleteButton = true;
     this.adminService.deleteCustomer(this.id.value).subscribe(

@@ -36,6 +36,10 @@ export class AddcompanyComponent implements OnInit {
     }
   }
   saveCompany(){
+    if(this.newCompany.invalid){
+      this.snackBar.open("Please fill in the form correctly","dismiss",{duration:2000});
+      return;
+    }
     if(this.company){
       this.updateCompany();
     }else{
@@ -43,6 +47,10 @@ export class AddcompanyComponent implements OnInit {
     }
   }
   deleteCompany(){
+    if(this.newCompany.invalid){
+      this.snackBar.open("Please fill in the form correctly","dismiss",{duration:2000});
+      return;
+    }
     this.newCompany.disable();
     this.disableDeleteButton=true;
     this.adminService.deleteCompany(this.id.value).subscribe(

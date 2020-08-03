@@ -9,7 +9,7 @@ import { Category } from '../models/category.enum';
   providedIn: 'root'
 })
 export class CustomerService {
-  path = "http://localhost:8080/customer"
+  path = "/customer"
   constructor(private client : HttpClient, private loginService : LoginService) { }
   public getCustomerDetails(){
     const path : string = this.path + "/customer-details/" + this.loginService.token;

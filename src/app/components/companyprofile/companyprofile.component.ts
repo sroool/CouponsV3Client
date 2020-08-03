@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CompanyService } from 'src/app/services/company.service';
@@ -25,7 +26,7 @@ export class CompanyprofileComponent implements OnInit {
   displayedColumns: string[] = ["image", "title", "category", "endDate", "originalAmount", "bought", "price", "actions"]
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  constructor(private companyService: CompanyService, private dialog: MatDialog, private snackBar: MatSnackBar
+  constructor(private router : Router,private companyService: CompanyService, private dialog: MatDialog, private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -63,6 +64,9 @@ export class CompanyprofileComponent implements OnInit {
         )
       },
       error => {
+        if(error.status == 401){
+          this.router.navigateByUrl('/home')
+        }
         let errorMessage: string = error.error;
         if (error.status == 0 || error.status == 500) {
           errorMessage = "Oops, try again later";

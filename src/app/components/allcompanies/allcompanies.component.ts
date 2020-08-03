@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Company } from 'src/app/models/company';
 import { AdminService } from 'src/app/services/admin.service';
@@ -21,7 +22,7 @@ export class AllcompaniesComponent implements OnInit {
   displayedColumns : string[] = ["id", "name", "email", "password", "coupons","actions"];
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator : MatPaginator;
-  constructor(private adminService : AdminService, private snackBar:MatSnackBar, private dialog : MatDialog) { }
+  constructor(private router:Router, private adminService : AdminService, private snackBar:MatSnackBar, private dialog : MatDialog) { }
 
   ngOnInit(): void {
     this.adminService.getAllCompanies().subscribe(
@@ -32,6 +33,9 @@ export class AllcompaniesComponent implements OnInit {
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
       }, error => {
+        if(error.status == 401){
+          this.router.navigateByUrl('/home')
+        }
         let errorMessage : string = error.error;
         if(error.status == 0){
           errorMessage = "oops, try again later";

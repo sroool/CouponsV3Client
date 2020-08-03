@@ -83,10 +83,13 @@ export class AddcouponComponent implements OnInit {
   validateImage(event) {
     this.clearImageErrors();
     this.couponImageFile = event.target.files[0];
+ 
     if (!this.couponImageFile){
+      
       this.couponImageError.couponImageRequiredError = true;
       return;
     }
+   
     this.couponImageType = this.couponImageFile.type.split("/")[1];
     if (!this.acceptedTypes.includes(this.couponImageType)) {
       this.couponImageError.couponImageTypeError = true;
@@ -102,7 +105,7 @@ export class AddcouponComponent implements OnInit {
           this.image.setValue("");
         } else {
           this.displayImageSrc = this.couponImage.src;
-          this.image.setValue(window.btoa(this.couponImage.src));
+          this.image.setValue("valid")
           this.clearImageErrors();
         }
       }
@@ -119,10 +122,12 @@ export class AddcouponComponent implements OnInit {
     if (endDate && endDate.touched) {
       endDate.updateValueAndValidity();
     }
-    if (startDate.getTime() < today.getTime()) {
+    if(startDate.getFullYear() < today.getFullYear() || startDate.getMonth() < today.getMonth() || startDate.getDate() < today.getDate()){
       return { invalidStartDate: true };
     }
+  
   }
+
   validateEndDate(control: AbstractControl) {
     const startDate = new Date(control.parent?.get("startDate").value);
     const endDate = new Date(control.value);
@@ -134,6 +139,10 @@ export class AddcouponComponent implements OnInit {
     this.dialog.close()
   }
   saveCoupon() {
+    if(this.newCoupon.invalid){
+      this.snackBar.open("Please fill in the form correctly","dismiss",{duration:2000});
+      return;
+    }
     if (this.coupon) {
       this.updateCoupon();
     } else {
@@ -141,10 +150,12 @@ export class AddcouponComponent implements OnInit {
     }
   }
   addCoupon() {
+    
     this.newCoupon.disable();
+    this.image.setValue(window.btoa(this.displayImageSrc));
     const coupon: Coupon = new Coupon(0, this.companyId, this.category.value, this.title.value.trim(),
       this.description.value.trim(), this.startDate.value, this.endDate.value,
-      this.amount.value, this.amount.value, this.price.value, this.image.value);
+      this.amount.value, 0, this.price.value, this.image.value);
     this.companyService.addCoupon(coupon).subscribe(
       success => {
         const snackRef = this.snackBar.open("New Coupon added successfully", "dismiss");
@@ -167,9 +178,10 @@ export class AddcouponComponent implements OnInit {
   updateCoupon() {
     this.newCoupon.disable();
     this.disableDeleteButton = true;
+    this.image.setValue(window.btoa(this.displayImageSrc));
     const coupon: Coupon = new Coupon(this.coupon._id, this.companyId, this.category.value, this.title.value,
       this.description.value, this.startDate.value, this.endDate.value,
-      this.amount.value, this.amount.value, this.price.value, this.image.value);
+      this.amount.value, this.coupon._bought, this.price.value, this.image.value);
     this.companyService.updateCoupon(coupon).subscribe(
       success => {
         const snackRef = this.snackBar.open("Coupon updated successfully", "dismiss");
@@ -191,6 +203,10 @@ export class AddcouponComponent implements OnInit {
     )
   }
   deleteCoupon() {
+    if(this.newCoupon.invalid){
+      this.snackBar.open("Please fill in the form correctly","dismiss",{duration:2000});
+      return;
+    }
     this.newCoupon.disable();
     this.disableDeleteButton = true;
     this.companyService.deleteCoupon(this.coupon._id).subscribe(

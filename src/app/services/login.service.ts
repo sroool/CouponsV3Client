@@ -10,12 +10,12 @@ import { Customer } from '../models/customer';
   providedIn: 'root'
 })
 export class LoginService {
-  path = "http://localhost:8080/login";
+  path = "/login";
   authenticated = 0;
   clientType : string;
   constructor(private client : HttpClient, private snackBar : MatSnackBar, private router : Router) {
     
-    this.loggedin();
+    
    }
   get token() : string{
     return sessionStorage.getItem("token") || "guest";
@@ -42,7 +42,7 @@ export class LoginService {
         
       },
       error=>{
-        let errorMessage = error.status == 0 ? "Oops, Please try again later" : error.error;
+        let errorMessage = error.status == 0 || error.status == 500? "Oops, Please try again later" : error.error;
       
         this.snackBar.open(errorMessage, "dismiss");
       }
@@ -52,7 +52,7 @@ export class LoginService {
     this.client.post(this.path + "/logout/" + sessionStorage.getItem("token"), null, {responseType:"text"}).subscribe(
       success => {
         this.snackBar.open(success, null, {duration: 3000});
-        sessionStorage.setItem("token","null");
+        sessionStorage.setItem("token","guest");
         this.authenticated = 1;
         this.clientType = null;
         this.router.navigateByUrl("login");
@@ -65,30 +65,8 @@ export class LoginService {
   public loggedin(){
     const token : string = sessionStorage.getItem("token") || "null";
     const path = this.path + "/loggedin/" + token;
-    
-    this.client.post(path, null).subscribe(
-      success => {
-        if(typeof success == 'object'){
-          if(success.hasOwnProperty('firstName')){
-            this.clientType = "Customer";
-          }else{
-            this.clientType = "Company";
-          }
-        }else{
-          this.clientType = "Administrator";
-        }
-        this.authenticated = 2;
-        
-       
-      }, 
-      error => {
-        
-        this.authenticated = 1;
-        this.router.navigateByUrl("/login");
-        
-        sessionStorage.setItem("token","guest");
-      }
-    );
+    return this.client.post(path, null,{responseType:'text'});
   }
+  
   
 }

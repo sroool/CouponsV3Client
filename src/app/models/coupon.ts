@@ -1,7 +1,6 @@
 import { Category } from './category.enum';
 
 export class Coupon {
-    private bought : number;
   
     constructor( private id : number,
                  private companyId : number,
@@ -11,11 +10,10 @@ export class Coupon {
                  private startDate : Date,
                  private endDate : Date,
                  private originalAmount :  number,
-                 private currentAmount : number,
+                 private bought : number,
                  private price : number,
                  private imageUrlData 
         ){
-            this.bought = originalAmount - currentAmount;
         }
 
     get _id() : number{
@@ -67,14 +65,12 @@ export class Coupon {
     set _originalAmount(originalAmount : number) {
         this.originalAmount = originalAmount;
     }
-    get _currentAmount() : number{
-        return this.currentAmount;
-    }
-    set _currentAmount(currentAmount : number){
-        this.currentAmount = currentAmount;
-    }
+   
     get _bought() : number{
         return this.bought;
+    }
+    set _bought(bought : number){
+        this.bought = bought;
     }
     get _price() : number{
         return this.price;
@@ -92,7 +88,7 @@ export class Coupon {
     public static getCoupon(obj : Coupon){
         let coupon : Coupon = new Coupon(obj.id,obj.companyId,obj.category,obj.title,
                                          obj.description,obj.startDate,obj.endDate,
-                                         obj.originalAmount,obj.currentAmount,obj.price,obj.imageUrlData);
+                                         obj.originalAmount,obj.bought,obj.price,obj.imageUrlData);
 
         return coupon;
     }

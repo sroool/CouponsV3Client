@@ -10,7 +10,7 @@ import { Customer } from '../models/customer';
 })
 export class AdminService {
   // "http://localhost:8080"
-  path = "http://localhost:8080/admin"
+  path = "/admin"
   constructor(private client : HttpClient, private loginService : LoginService) { }
   public addCompany( company : Company){
     const path : string = this.path + "/add-company/" + this.loginService.token;

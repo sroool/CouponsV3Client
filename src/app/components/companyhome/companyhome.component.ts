@@ -1,6 +1,6 @@
+import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CompanyService } from 'src/app/services/company.service';
-import { CustomerService } from 'src/app/services/customer.service';
 import { Company } from './../../models/company';
 import { Component, OnInit } from '@angular/core';
 
@@ -11,7 +11,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CompanyhomeComponent implements OnInit {
   company : Company;
-  constructor(private companyService : CompanyService, private snackBar : MatSnackBar) { }
+  constructor(private router : Router, private companyService : CompanyService, private snackBar : MatSnackBar) { }
 
   ngOnInit(): void {
     this.companyService.getCompanyDetails().subscribe(
@@ -19,6 +19,9 @@ export class CompanyhomeComponent implements OnInit {
         this.company = Company.getCompany(success);
       },
       error => {
+        if(error.status == 401){
+          this.router.navigateByUrl('/home')
+        }
           let errorMessage = error.error;
           if(error.status == 0 || error.status == 500){
             errorMessage = "Oops, something went wrong";

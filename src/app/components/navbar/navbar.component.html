@@ -13,8 +13,6 @@
         <div class="actions">
             <mat-spinner color="accent" *ngIf="!loginService.authenticated; else logout" [diameter]="30"></mat-spinner>
             <ng-template #logout>
-                
-                
                 <button mat-icon-button *ngIf="loginService.authenticated == 2" [matMenuTriggerFor]="myMenu" ><mat-icon>account_circle</mat-icon></button>
                 <mat-menu #myMenu="matMenu">
                     

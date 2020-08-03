@@ -33,7 +33,6 @@ export class CouponComponent implements OnInit {
 
   ngOnInit(): void {
 
-    
     this.activeRoute.paramMap.subscribe( params =>{
       this.couponId = +params.get('id');
       this.getCoupon();
@@ -70,6 +69,8 @@ export class CouponComponent implements OnInit {
         if (error.status == 400) {
           this.router.navigateByUrl("/not-found");
           return;
+        } if(error.status == 401){
+          this.router.navigateByUrl('/home')
         }
         let errorMessage: string = error.error;
         if (error.status == 0 || error.status == 500) {

@@ -73,7 +73,9 @@ export class CustomerhomeComponent implements OnInit {
         this.limitedTimeCoupons = this.coupons.filter(this.limitedTime).sort(this.sortByLimitedTime).slice(0,3);
         
       }, error => {
-        console.log(error);
+        if(error.status == 401){
+          this.router.navigateByUrl('/home')
+        }
         let errorMessage: string = error.error;
         if (error.status == 0 || error.status == 500) {
           errorMessage = "Oops, try again later";
